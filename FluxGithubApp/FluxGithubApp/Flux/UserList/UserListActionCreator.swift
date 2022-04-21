@@ -8,6 +8,7 @@
 import RxSwift
 
 final class UserListActionCreator: ActionCreator {
+    private let PER_PAGE = 20
     
     private var userRepository: UserRepository
     
@@ -16,12 +17,23 @@ final class UserListActionCreator: ActionCreator {
         super.init(dispatcher)
     }
     
-    func fetchUserList() {
-        userRepository.fetchList()
+    func fetchUserList(page: Int) {
+        userRepository.fetchList(page: page, perPage: PER_PAGE)
             .subscribe { [weak self] list in
-                self?.dispatch(UserListAction.Fetched(
-                    list: list
-                ))
+                guard let strongSelf = self else { return }
+                
+                if page <= 1 {
+                    strongSelf.dispatch(UserListAction.FirstFetched(
+                        isDataEnded: list.count < strongSelf.PER_PAGE,
+                        list: list
+                    ))
+                } else {
+                    strongSelf.dispatch(UserListAction.MoreFetched(
+                        page: page,
+                        isDataEnded: list.count < strongSelf.PER_PAGE,
+                        list: list
+                    ))
+                }
             } onFailure: { error in
                 print(error)
             }

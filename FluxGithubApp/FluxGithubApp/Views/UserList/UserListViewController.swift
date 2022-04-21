@@ -18,6 +18,7 @@ class UserListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private var userList = [User]()
+    private var canFetchMore: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,13 @@ class UserListViewController: UIViewController {
                 strongSelf.tableView.reloadData()
             })
             .disposed(by: disposeBag)
+        
+        viewModelOutput?.canFetchMore
+            .withUnretained(self)
+            .subscribe(onNext: { owner, canFetchMore in
+                owner.canFetchMore = canFetchMore
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -60,6 +68,13 @@ extension UserListViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UserListTableViewCell
         cell.configure(user: userList[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if self.canFetchMore && indexPath.row >= (userList.count - 2) {
+            // 次ページデータ取得
+            viewModelInput?.fetchMore()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
