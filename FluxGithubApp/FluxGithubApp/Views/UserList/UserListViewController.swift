@@ -7,10 +7,18 @@
 
 import UIKit
 import SwiftUI
+import RxSwift
 
 class UserListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var viewModelInput: UserListViewModelInput?
+    var viewModelOutput: UserListViewModelOutput?
+    
+    private let disposeBag = DisposeBag()
+    
+    private var userList = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +30,23 @@ class UserListViewController: UIViewController {
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         
+        viewModelInput?.fetchUserList()
+        
+        setBindings()
+        
         self.tableView.reloadData()
+    }
+    
+    private func setBindings() {
+        viewModelOutput?.list
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { [weak self] list in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.userList = list
+                print(list)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func createItemCell() -> UITableViewCell {
