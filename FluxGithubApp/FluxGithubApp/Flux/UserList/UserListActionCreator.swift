@@ -8,8 +8,6 @@
 import RxSwift
 
 final class UserListActionCreator: ActionCreator {
-    private let PER_PAGE = 20
-    
     private var userRepository: UserRepository
     
     required init(_ dispatcher: Dispatcher, userRepository: UserRepository) {
@@ -17,26 +15,25 @@ final class UserListActionCreator: ActionCreator {
         super.init(dispatcher)
     }
     
-    func fetchUserList(page: Int) {
-        userRepository.fetchList(page: page, perPage: PER_PAGE)
-            .subscribe { [weak self] list in
-                guard let strongSelf = self else { return }
-                
+    func fetchUserList(page: Int, perPage: Int) {
+        userRepository.fetchList(page: page, perPage: perPage)
+            .subscribe(with: self, onSuccess: { owner, list in
                 if page <= 1 {
-                    strongSelf.dispatch(UserListAction.FirstFetched(
-                        isDataEnded: list.count < strongSelf.PER_PAGE,
+                    owner.dispatch(UserListAction.FirstFetched(
+                        isDataEnded: list.count < perPage,
                         list: list
                     ))
                 } else {
-                    strongSelf.dispatch(UserListAction.MoreFetched(
+                    owner.dispatch(UserListAction.MoreFetched(
                         page: page,
-                        isDataEnded: list.count < strongSelf.PER_PAGE,
+                        isDataEnded: list.count < perPage,
                         list: list
                     ))
                 }
-            } onFailure: { error in
+            }, onFailure: { _, error in
+                // APIエラーアクションとして流す
                 print(error)
-            }
+            })
             .disposed(by: disposeBag)
     }
 }

@@ -19,6 +19,8 @@ protocol UserListViewModelOutput {
 }
 
 class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
+    private let PER_PAGE = 20
+    
     private let actionCreator: UserListActionCreator
     private let store: UserListStore
     
@@ -41,7 +43,7 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
     }
     
     func fetchUserList() {
-        actionCreator.fetchUserList(page: 1)
+        actionCreator.fetchUserList(page: 1, perPage: PER_PAGE)
     }
     
     func fetchMore() {
@@ -52,6 +54,6 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
             return
         }
         
-        actionCreator.fetchUserList(page: state.page + 1)
+        actionCreator.fetchUserList(page: state.page + 1, perPage: PER_PAGE)
     }
 }

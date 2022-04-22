@@ -41,18 +41,15 @@ class UserListViewController: UIViewController {
     private func setBindings() {
         viewModelOutput?.list
             .asDriver(onErrorJustReturn: [])
-            .drive(onNext: { [weak self] list in
-                guard let strongSelf = self else { return }
-                
-                strongSelf.userList = list
+            .drive(with: self, onNext: { owner, list in
                 print(list)
-                strongSelf.tableView.reloadData()
+                owner.userList = list
+                owner.tableView.reloadData()
             })
             .disposed(by: disposeBag)
         
         viewModelOutput?.canFetchMore
-            .withUnretained(self)
-            .subscribe(onNext: { owner, canFetchMore in
+            .subscribe(with: self, onNext: { owner, canFetchMore in
                 owner.canFetchMore = canFetchMore
             })
             .disposed(by: disposeBag)
