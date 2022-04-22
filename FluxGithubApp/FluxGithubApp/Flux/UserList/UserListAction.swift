@@ -8,12 +8,15 @@
 enum UserListAction {
     struct FirstFetched: Action {
         var isDataEnded: Bool
-        var list: [User]
+        var users: [User]
     }
     
     struct MoreFetched: Action {
-        var page: Int
         var isDataEnded: Bool
-        var list: [User]
+        var users: [User]
     }
+    
+    struct MoreFetchedStart: Action { }
+    
+    struct MoreFetchedEnd: Action { }
 }

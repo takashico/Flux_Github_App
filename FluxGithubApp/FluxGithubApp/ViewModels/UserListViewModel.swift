@@ -14,8 +14,11 @@ protocol UserListViewModelInput {
 }
 
 protocol UserListViewModelOutput {
-    var list: Observable<[User]> { get }
+    var users: Observable<[User]> { get }
     var canFetchMore: Observable<Bool> { get }
+    var isDataEnded: Observable<Bool> { get }
+    var isLoading: Observable<Bool> { get }
+    var isMoreLoading: Observable<Bool> { get }
 }
 
 class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
@@ -24,36 +27,55 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
     private let actionCreator: UserListActionCreator
     private let store: UserListStore
     
-    var list: Observable<[User]>
+    var users: Observable<[User]>
     var canFetchMore: Observable<Bool>
+    var isDataEnded: Observable<Bool>
+    var isLoading: Observable<Bool>
+    var isMoreLoading: Observable<Bool>
     
     init(actionCreator: UserListActionCreator, store: UserListStore) {
         self.actionCreator = actionCreator
         self.store = store
         
-        self.list = store.state.map { state -> [User] in
-            state.list
+        self.users = store.state.map { state in
+            state.users
         }
         .share()
         
-        self.canFetchMore = store.state.map { state -> Bool in
+        self.canFetchMore = store.state.map { state in
             state.canFetchMore
+        }
+        .share()
+        
+        self.isDataEnded = store.state.map { state in
+            state.isDataEnded
+        }
+        .share()
+        
+        self.isLoading = store.state.map { state in
+            state.isLoading
+        }
+        .share()
+        
+        self.isMoreLoading = store.state.map { state in
+            state.isMoreLoading
         }
         .share()
     }
     
     func fetchUserList() {
-        actionCreator.fetchUserList(page: 1, perPage: PER_PAGE)
+        actionCreator.firstFetchUserList(perPage: PER_PAGE)
     }
     
     func fetchMore() {
         let state = store.state.value
         
+        guard let since = state.users.last?.id else { return }
         // 読み込み中 or すべてのデータ読み込み済み or 初回データ取得未取得
         if state.isLoading || state.isDataEnded || !state.isFirstFetched {
             return
         }
         
-        actionCreator.fetchUserList(page: state.page + 1, perPage: PER_PAGE)
+        actionCreator.moreFetchUserList(since: since, perPage: PER_PAGE)
     }
 }

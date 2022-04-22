@@ -6,9 +6,9 @@
 //
 
 struct UserListState: ViewState {
-    let list: [User]
-    let page: Int
+    let users: [User]
     let isLoading: Bool
+    let isMoreLoading: Bool
     let isFirstFetched: Bool
     let isDataEnded: Bool
     let canFetchMore: Bool

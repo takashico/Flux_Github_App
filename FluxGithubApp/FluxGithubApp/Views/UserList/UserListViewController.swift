@@ -16,6 +16,7 @@ class UserListViewController: UIViewController {
     var viewModelInput: UserListViewModelInput?
     var viewModelOutput: UserListViewModelOutput?
     
+    private let indicatorView = UIActivityIndicatorView(style: .medium)
     private let disposeBag = DisposeBag()
     private var userList = [User]()
     private var canFetchMore: Bool = false
@@ -38,19 +39,52 @@ class UserListViewController: UIViewController {
         setBindings()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // indicatorViewの設定
+        indicatorView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
+    }
+    
     private func setBindings() {
-        viewModelOutput?.list
+        viewModelOutput?.users
+            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
-            .drive(with: self, onNext: { owner, list in
-                print(list)
-                owner.userList = list
+            .drive(with: self, onNext: { owner, users in
+                print(users.count)
+                owner.userList = users
                 owner.tableView.reloadData()
             })
             .disposed(by: disposeBag)
         
         viewModelOutput?.canFetchMore
+            .distinctUntilChanged()
             .subscribe(with: self, onNext: { owner, canFetchMore in
                 owner.canFetchMore = canFetchMore
+            })
+            .disposed(by: disposeBag)
+        
+        viewModelOutput?.isDataEnded
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, isDataEnded in
+                if isDataEnded {
+                    owner.tableView.tableFooterView = UIView()
+                } else {
+                    owner.tableView.tableFooterView = owner.indicatorView
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModelOutput?.isMoreLoading
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, isMoreLoading in
+                if isMoreLoading {
+                    owner.indicatorView.startAnimating()
+                } else {
+                    owner.indicatorView.stopAnimating()
+                }
             })
             .disposed(by: disposeBag)
     }

@@ -8,7 +8,7 @@
 import RxSwift
 
 protocol UserRepository {
-    func fetchList(page: Int, perPage: Int) -> Single<[User]>
+    func fetchList(since: Int, perPage: Int) -> Single<[User]>
 }
 
 final class UserRepositoryImpl: UserRepository {
@@ -19,7 +19,7 @@ final class UserRepositoryImpl: UserRepository {
     }
     
     /// ユーザー一覧を取得
-    func fetchList(page: Int, perPage: Int) -> Single<[User]> {
-        return client.fetchUserList(page: page, perPage: perPage)
+    func fetchList(since: Int, perPage: Int) -> Single<[User]> {
+        return client.fetchUserList(since: since, perPage: perPage)
     }
 }

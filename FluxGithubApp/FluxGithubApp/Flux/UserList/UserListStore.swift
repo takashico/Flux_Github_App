@@ -12,9 +12,9 @@ final class UserListStore: Store {
     
     let state = BehaviorRelay<UserListState>(
         value: UserListState(
-            list: [],
-            page: 1,
+            users: [],
             isLoading: false,
+            isMoreLoading: false,
             isFirstFetched: false,
             isDataEnded: false,
             canFetchMore: false
@@ -27,13 +27,13 @@ final class UserListStore: Store {
         switch action {
         case let action as UserListAction.FirstFetched:
             state.accept(UserListState(
-                list: action.list,
-                page: 1,
+                users: action.users,
                 isLoading: false,
+                isMoreLoading: false,
                 isFirstFetched: true,
                 isDataEnded: action.isDataEnded,
                 canFetchMore: canFetchMore(
-                    isLoading: false,
+                    isMoreLoading: false,
                     isFirstFetched: true,
                     isDataEnded: action.isDataEnded
                 )
@@ -41,15 +41,39 @@ final class UserListStore: Store {
             
         case let action as UserListAction.MoreFetched:
             state.accept(UserListState(
-                list: current.list + action.list,
-                page: action.page,
+                users: current.users + action.users,
                 isLoading: false,
+                isMoreLoading: false,
                 isFirstFetched: true,
                 isDataEnded: action.isDataEnded,
                 canFetchMore: canFetchMore(
-                    isLoading: false,
+                    isMoreLoading: false,
                     isFirstFetched: true,
                     isDataEnded: action.isDataEnded
+                )
+            ))
+            
+        case _ as UserListAction.MoreFetchedStart:
+            state.accept(UserListState(
+                users: current.users,
+                isLoading: false,
+                isMoreLoading: true,
+                isFirstFetched: true,
+                isDataEnded: current.isDataEnded,
+                canFetchMore: false
+            ))
+            
+        case _ as UserListAction.MoreFetchedEnd:
+            state.accept(UserListState(
+                users: current.users,
+                isLoading: false,
+                isMoreLoading: false,
+                isFirstFetched: true,
+                isDataEnded: current.isDataEnded,
+                canFetchMore: canFetchMore(
+                    isMoreLoading: false,
+                    isFirstFetched: true,
+                    isDataEnded: current.isDataEnded
                 )
             ))
         default:
@@ -57,7 +81,7 @@ final class UserListStore: Store {
         }
     }
     
-    private func canFetchMore(isLoading: Bool, isFirstFetched: Bool, isDataEnded: Bool) -> Bool {
-        return !isLoading && !isDataEnded && isFirstFetched
+    private func canFetchMore(isMoreLoading: Bool, isFirstFetched: Bool, isDataEnded: Bool) -> Bool {
+        return !isMoreLoading && !isDataEnded && isFirstFetched
     }
 }

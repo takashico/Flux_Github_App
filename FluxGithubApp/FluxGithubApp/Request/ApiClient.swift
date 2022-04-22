@@ -17,9 +17,8 @@ class ApiClient {
         "Authorization": "Bearer \(Environments.GITHUB_PERSONAL_ACCESS_TOKEN)"
     ]
     
-    func fetchUserList(page: Int, perPage: Int) -> Single<([User])> {
+    func fetchUserList(since: Int, perPage: Int) -> Single<([User])> {
         var urlComponents = URLComponents(string: "https://api.github.com/users")
-        let since: Int = (page - 1) * perPage
         urlComponents?.queryItems = [
             URLQueryItem(name: "since", value: "\(since)"),
             URLQueryItem(name: "per_page", value: "\(perPage)")
