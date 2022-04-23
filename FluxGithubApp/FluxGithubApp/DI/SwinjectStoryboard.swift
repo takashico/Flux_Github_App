@@ -49,6 +49,7 @@ extension SwinjectStoryboard {
                 store: r.resolve(UserListStore.self)!
             )
         }
+        .inObjectScope(.container)
         
         // ViewController
         defaultContainer.storyboardInitCompleted(UserListViewController.self) { r, c in
