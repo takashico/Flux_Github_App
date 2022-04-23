@@ -16,7 +16,11 @@ enum UserListAction {
         var users: [User]
     }
     
-    struct MoreFetchedStart: Action { }
+    struct FirstFetchStart: Action { }
     
-    struct MoreFetchedEnd: Action { }
+    struct FirstFetchEnd: Action { }
+    
+    struct MoreFetchStart: Action { }
+    
+    struct MoreFetchEnd: Action { }
 }

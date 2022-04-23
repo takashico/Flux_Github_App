@@ -16,11 +16,13 @@ final class UserListActionCreator: ActionCreator {
     }
     
     func firstFetchUserList(perPage: Int) {
-        // TODO: 読み込み開始
+        // 読み込み開始
+        dispatch(UserListAction.FirstFetchStart())
         
         userRepository.fetchList(since: 0, perPage: perPage)
             .subscribe(with: self, onSuccess: { owner, users in
-                // TODO: 読み込み終了
+                // 読み込み終了
+                owner.dispatch(UserListAction.FirstFetchEnd())
                 
                 owner.dispatch(UserListAction.FirstFetched(
                     isDataEnded: users.count < perPage,
@@ -35,12 +37,12 @@ final class UserListActionCreator: ActionCreator {
     
     func moreFetchUserList(since: Int, perPage: Int) {
         // 読み込み開始
-        dispatch(UserListAction.MoreFetchedStart())
+        dispatch(UserListAction.MoreFetchStart())
         
         userRepository.fetchList(since: since, perPage: perPage)
             .subscribe(with: self, onSuccess: { owner, users in
                 // 読み込み終了
-                owner.dispatch(UserListAction.MoreFetchedEnd())
+                owner.dispatch(UserListAction.MoreFetchEnd())
                 
                 owner.dispatch(UserListAction.MoreFetched(
                     isDataEnded: users.count < perPage,

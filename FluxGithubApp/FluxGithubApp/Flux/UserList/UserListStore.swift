@@ -53,7 +53,27 @@ final class UserListStore: Store {
                 )
             ))
             
-        case _ as UserListAction.MoreFetchedStart:
+        case _ as UserListAction.FirstFetchStart:
+            state.accept(UserListState(
+                users: current.users,
+                isLoading: true,
+                isMoreLoading: false,
+                isFirstFetched: false,
+                isDataEnded: current.isDataEnded,
+                canFetchMore: false
+            ))
+            
+        case _ as UserListAction.FirstFetchEnd:
+            state.accept(UserListState(
+                users: current.users,
+                isLoading: false,
+                isMoreLoading: false,
+                isFirstFetched: false,
+                isDataEnded: current.isDataEnded,
+                canFetchMore: current.canFetchMore
+            ))
+            
+        case _ as UserListAction.MoreFetchStart:
             state.accept(UserListState(
                 users: current.users,
                 isLoading: false,
@@ -63,18 +83,14 @@ final class UserListStore: Store {
                 canFetchMore: false
             ))
             
-        case _ as UserListAction.MoreFetchedEnd:
+        case _ as UserListAction.MoreFetchEnd:
             state.accept(UserListState(
                 users: current.users,
                 isLoading: false,
                 isMoreLoading: false,
                 isFirstFetched: true,
                 isDataEnded: current.isDataEnded,
-                canFetchMore: canFetchMore(
-                    isMoreLoading: false,
-                    isFirstFetched: true,
-                    isDataEnded: current.isDataEnded
-                )
+                canFetchMore: current.canFetchMore
             ))
         default:
             assertionFailure("意図しないアクションの通知を受け取りました。")

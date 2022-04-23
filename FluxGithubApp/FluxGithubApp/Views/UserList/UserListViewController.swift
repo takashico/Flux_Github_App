@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import RxSwift
+import PKHUD
 
 class UserListViewController: UIViewController {
 
@@ -72,6 +73,18 @@ class UserListViewController: UIViewController {
                     owner.tableView.tableFooterView = UIView()
                 } else {
                     owner.tableView.tableFooterView = owner.indicatorView
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModelOutput?.isLoading
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { isLoading in
+                if isLoading {
+                    HUD.show(.progress)
+                } else {
+                    HUD.hide()
                 }
             })
             .disposed(by: disposeBag)
