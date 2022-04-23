@@ -100,6 +100,14 @@ class UserListViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        viewModelOutput?.apiError
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { error in
+                guard let error = error else { return }
+                HUD.show(.labeledError(title: "Network Error", subtitle: error.localizedDescription))
+            })
+            .disposed(by: disposeBag)
     }
 }
 

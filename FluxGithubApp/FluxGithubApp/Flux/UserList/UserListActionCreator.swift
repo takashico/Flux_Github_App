@@ -28,9 +28,13 @@ final class UserListActionCreator: ActionCreator {
                     isDataEnded: users.count < perPage,
                     users: users
                 ))
-            }, onFailure: { _, error in
-                // TODO: APIエラーアクションとして流す
-                print(error)
+            }, onFailure: { owner, error in
+                // 読み込み終了
+                owner.dispatch(UserListAction.FirstFetchEnd())
+                
+                owner.dispatch(UserListAction.ApiError(
+                    error: error
+                ))
             })
             .disposed(by: disposeBag)
     }
@@ -48,9 +52,13 @@ final class UserListActionCreator: ActionCreator {
                     isDataEnded: users.count < perPage,
                     users: users
                 ))
-            }, onFailure: { _, error in
-                // TODO: APIエラーアクションとして流す
-                print(error)
+            }, onFailure: { owner, error in
+                // 読み込み終了
+                owner.dispatch(UserListAction.MoreFetchEnd())
+                
+                owner.dispatch(UserListAction.ApiError(
+                    error: error
+                ))
             })
             .disposed(by: disposeBag)
     }

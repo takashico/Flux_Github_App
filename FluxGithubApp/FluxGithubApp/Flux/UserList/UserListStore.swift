@@ -17,7 +17,8 @@ final class UserListStore: Store {
             isMoreLoading: false,
             isFirstFetched: false,
             isDataEnded: false,
-            canFetchMore: false
+            canFetchMore: false,
+            apiError: nil
         )
     )
     
@@ -36,7 +37,8 @@ final class UserListStore: Store {
                     isMoreLoading: false,
                     isFirstFetched: true,
                     isDataEnded: action.isDataEnded
-                )
+                ),
+                apiError: nil
             ))
             
         case let action as UserListAction.MoreFetched:
@@ -44,13 +46,25 @@ final class UserListStore: Store {
                 users: current.users + action.users,
                 isLoading: false,
                 isMoreLoading: false,
-                isFirstFetched: true,
+                isFirstFetched: current.isFirstFetched,
                 isDataEnded: action.isDataEnded,
                 canFetchMore: canFetchMore(
                     isMoreLoading: false,
                     isFirstFetched: true,
                     isDataEnded: action.isDataEnded
-                )
+                ),
+                apiError: nil
+            ))
+            
+        case let action as UserListAction.ApiError:
+            state.accept(UserListState(
+                users: current.users,
+                isLoading: false,
+                isMoreLoading: false,
+                isFirstFetched: true,
+                isDataEnded: current.isDataEnded,
+                canFetchMore: false,
+                apiError: action.error
             ))
             
         case _ as UserListAction.FirstFetchStart:
@@ -58,9 +72,10 @@ final class UserListStore: Store {
                 users: current.users,
                 isLoading: true,
                 isMoreLoading: false,
-                isFirstFetched: false,
+                isFirstFetched: current.isFirstFetched,
                 isDataEnded: current.isDataEnded,
-                canFetchMore: false
+                canFetchMore: false,
+                apiError: nil
             ))
             
         case _ as UserListAction.FirstFetchEnd:
@@ -68,9 +83,10 @@ final class UserListStore: Store {
                 users: current.users,
                 isLoading: false,
                 isMoreLoading: false,
-                isFirstFetched: false,
+                isFirstFetched: current.isFirstFetched,
                 isDataEnded: current.isDataEnded,
-                canFetchMore: current.canFetchMore
+                canFetchMore: current.canFetchMore,
+                apiError: nil
             ))
             
         case _ as UserListAction.MoreFetchStart:
@@ -80,7 +96,8 @@ final class UserListStore: Store {
                 isMoreLoading: true,
                 isFirstFetched: true,
                 isDataEnded: current.isDataEnded,
-                canFetchMore: false
+                canFetchMore: false,
+                apiError: nil
             ))
             
         case _ as UserListAction.MoreFetchEnd:
@@ -90,7 +107,8 @@ final class UserListStore: Store {
                 isMoreLoading: false,
                 isFirstFetched: true,
                 isDataEnded: current.isDataEnded,
-                canFetchMore: current.canFetchMore
+                canFetchMore: current.canFetchMore,
+                apiError: nil
             ))
         default:
             assertionFailure("意図しないアクションの通知を受け取りました。")

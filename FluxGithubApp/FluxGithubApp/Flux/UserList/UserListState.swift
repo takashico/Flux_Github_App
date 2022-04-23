@@ -12,4 +12,5 @@ struct UserListState: ViewState {
     let isFirstFetched: Bool
     let isDataEnded: Bool
     let canFetchMore: Bool
+    let apiError: Error?
 }

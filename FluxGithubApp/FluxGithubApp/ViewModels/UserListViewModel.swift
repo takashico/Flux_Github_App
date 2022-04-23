@@ -19,6 +19,7 @@ protocol UserListViewModelOutput {
     var isDataEnded: Observable<Bool> { get }
     var isLoading: Observable<Bool> { get }
     var isMoreLoading: Observable<Bool> { get }
+    var apiError: Observable<Error?> { get }
 }
 
 class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
@@ -32,6 +33,7 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
     var isDataEnded: Observable<Bool>
     var isLoading: Observable<Bool>
     var isMoreLoading: Observable<Bool>
+    var apiError: Observable<Error?>
     
     init(actionCreator: UserListActionCreator, store: UserListStore) {
         self.actionCreator = actionCreator
@@ -59,6 +61,11 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
         
         self.isMoreLoading = store.state.map { state in
             state.isMoreLoading
+        }
+        .share()
+        
+        self.apiError = store.state.map { state in
+            state.apiError
         }
         .share()
     }

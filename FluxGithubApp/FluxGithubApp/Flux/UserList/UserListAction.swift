@@ -23,4 +23,8 @@ enum UserListAction {
     struct MoreFetchStart: Action { }
     
     struct MoreFetchEnd: Action { }
+    
+    struct ApiError: Action {
+        var error: Error
+    }
 }
