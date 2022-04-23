@@ -21,18 +21,8 @@ class UserListViewController: UIViewController {
     var viewModelInput: UserListViewModelInput?
     var viewModelOutput: UserListViewModelOutput?
     
-    private let indicatorView = UIActivityIndicatorView(style: .medium)
     private let disposeBag = DisposeBag()
-    private var userList = [User]() {
-        didSet {
-            var snapshot = NSDiffableDataSourceSnapshot<SectionType, User>()
-            snapshot.appendSections(SectionType.allCases)
-            snapshot.appendItems(userList, toSection: .userList)
-            dataSource.apply(snapshot, animatingDifferences: true)
-        }
-    }
-    private var canFetchMore: Bool = false
-    
+    private let indicatorView = UIActivityIndicatorView(style: .medium)
     private lazy var dataSource: UITableViewDiffableDataSource<SectionType, User> = {
         let dataSource = UITableViewDiffableDataSource<SectionType, User>(tableView: tableView) { tableView, indexPath, user in
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UserListTableViewCell
@@ -42,6 +32,15 @@ class UserListViewController: UIViewController {
         
         return dataSource
     }()
+    private var userList = [User]() {
+        didSet {
+            var snapshot = NSDiffableDataSourceSnapshot<SectionType, User>()
+            snapshot.appendSections(SectionType.allCases)
+            snapshot.appendItems(userList, toSection: .userList)
+            dataSource.apply(snapshot, animatingDifferences: true)
+        }
+    }
+    private var canFetchMore: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +59,8 @@ class UserListViewController: UIViewController {
         
         viewModelInput?.fetchUserList()
         
-        setBindings()
+        setTableViewSubscribes()
+        setViewModelSubscribes()
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,13 +70,37 @@ class UserListViewController: UIViewController {
         indicatorView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
     }
     
-    private func setBindings() {
+    private func setTableViewSubscribes() {
+        // タップアクション
+        tableView.rx.itemSelected
+            .asSignal()
+            .emit(with: self, onNext: { owner, indexPath in
+                // TODO: ユーザー詳細ページへ遷移する処理を実装
+                owner.tableView.deselectRow(at: indexPath, animated: true)
+                print(indexPath)
+            })
+            .disposed(by: disposeBag)
+        
+        // 最下部の読み込み処理
+        tableView.rx.willDisplayCell
+            .asDriver()
+            .drive(onNext: { [weak self] cell, indexPath in
+                guard let strongSelf = self else { return }
+                
+                if strongSelf.canFetchMore && indexPath.row >= (strongSelf.userList.count - 2) {
+                    // 次ページデータ取得
+                    strongSelf.viewModelInput?.fetchMore()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setViewModelSubscribes() {
         // ユーザー一覧
         viewModelOutput?.users
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { owner, users in
-                print(users.count)
                 owner.userList = users
             })
             .disposed(by: disposeBag)
@@ -140,13 +164,6 @@ class UserListViewController: UIViewController {
 }
 
 extension UserListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if self.canFetchMore && indexPath.row >= (userList.count - 2) {
-            // 次ページデータ取得
-            viewModelInput?.fetchMore()
-        }
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
