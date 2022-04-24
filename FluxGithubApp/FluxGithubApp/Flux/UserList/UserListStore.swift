@@ -111,7 +111,7 @@ final class UserListStore: Store {
                 apiError: nil
             ))
         default:
-            assertionFailure("意図しないアクションの通知を受け取りました。")
+            break
         }
     }
     

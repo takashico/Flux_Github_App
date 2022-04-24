@@ -21,6 +21,11 @@ extension SwinjectStoryboard {
         }
         .inObjectScope(.container)
         
+        defaultContainer.register(ReposRepository.self) { r in
+            ReposRepositoryImpl(apiClient: r.resolve(ApiClient.self)!)
+        }
+        .inObjectScope(.container)
+        
         // Dispatch
         defaultContainer.register(Dispatcher.self) { _ in
             Dispatcher.shared
@@ -33,11 +38,25 @@ extension SwinjectStoryboard {
         }
         .inObjectScope(.container)
         
+        defaultContainer.register(UserDetailStore.self) { r in
+            UserDetailStore(r.resolve(Dispatcher.self)!)
+        }
+        .inObjectScope(.container)
+        
         // ActionCreator
         defaultContainer.register(UserListActionCreator.self) { r in
             UserListActionCreator(
                 r.resolve(Dispatcher.self)!,
                 userRepository: r.resolve(UserRepository.self)!
+            )
+        }
+        .inObjectScope(.container)
+        
+        defaultContainer.register(UserDetailActionCreator.self) { r in
+            UserDetailActionCreator(
+                r.resolve(Dispatcher.self)!,
+                userRepository: r.resolve(UserRepository.self)!,
+                reposRepository: r.resolve(ReposRepository.self)!
             )
         }
         .inObjectScope(.container)
@@ -49,12 +68,23 @@ extension SwinjectStoryboard {
                 store: r.resolve(UserListStore.self)!
             )
         }
-        .inObjectScope(.container)
+        
+        defaultContainer.register(UserDetailViewModel.self) { r in
+            UserDetailViewModel(
+                actionCreator: r.resolve(UserDetailActionCreator.self)!,
+                store: r.resolve(UserDetailStore.self)!
+            )
+        }
         
         // ViewController
         defaultContainer.storyboardInitCompleted(UserListViewController.self) { r, c in
             c.viewModelInput = r.resolve(UserListViewModel.self)
             c.viewModelOutput = r.resolve(UserListViewModel.self)
+        }
+        
+        defaultContainer.storyboardInitCompleted(UserDetailViewController.self) { r, c in
+            c.viewModelInput = r.resolve(UserDetailViewModel.self)
+            c.viewModelOutput = r.resolve(UserDetailViewModel.self)
         }
     }
 }

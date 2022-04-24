@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 import RxSwift
 import PKHUD
 
@@ -25,13 +24,14 @@ class UserListViewController: UIViewController {
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     private lazy var dataSource: UITableViewDiffableDataSource<SectionType, User> = {
         let dataSource = UITableViewDiffableDataSource<SectionType, User>(tableView: tableView) { tableView, indexPath, user in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UserListTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: UserListTableViewCell.className, for: indexPath) as! UserListTableViewCell
             cell.configure(user: user)
             return cell
         }
         
         return dataSource
     }()
+    // ユーザーリスト
     private var userList = [User]() {
         didSet {
             var snapshot = NSDiffableDataSourceSnapshot<SectionType, User>()
@@ -40,7 +40,7 @@ class UserListViewController: UIViewController {
             dataSource.apply(snapshot, animatingDifferences: true)
         }
     }
-    private var canFetchMore: Bool = false
+    private var canFetchMore = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +50,7 @@ class UserListViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         
         // セル登録
-        tableView.register(UINib.init(nibName: "UserListTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        tableView.register(UINib.init(nibName: UserListTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserListTableViewCell.className)
         
         // tableViewの設定
         tableView.dataSource = dataSource
@@ -75,9 +75,12 @@ class UserListViewController: UIViewController {
         tableView.rx.itemSelected
             .asSignal()
             .emit(with: self, onNext: { owner, indexPath in
-                // TODO: ユーザー詳細ページへ遷移する処理を実装
                 owner.tableView.deselectRow(at: indexPath, animated: true)
-                print(indexPath)
+                
+                let user = owner.userList[indexPath.row]
+                let viewController = UserDetailViewController.instantiate()
+                viewController.username = user.name
+                owner.navigationController?.pushViewController(viewController, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -87,7 +90,7 @@ class UserListViewController: UIViewController {
             .drive(onNext: { [weak self] cell, indexPath in
                 guard let strongSelf = self else { return }
                 
-                if strongSelf.canFetchMore && indexPath.row >= (strongSelf.userList.count - 2) {
+                if strongSelf.canFetchMore, indexPath.row >= (strongSelf.userList.count - 2) {
                     // 次ページデータ取得
                     strongSelf.viewModelInput?.fetchMore()
                 }
