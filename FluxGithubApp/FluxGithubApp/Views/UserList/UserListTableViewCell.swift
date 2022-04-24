@@ -22,6 +22,9 @@ class UserListTableViewCell: UITableViewCell {
     
     func configure(user: User) {
         nameLabel.text = user.name
-        avatarImageView.kf.setImage(with: URL(string: user.avatarUrl))
+        avatarImageView.kf.setImage(
+            with: URL(string: user.avatarUrl),
+            placeholder: UIImage(systemName: "person.circle.fill")
+        )
     }
 }

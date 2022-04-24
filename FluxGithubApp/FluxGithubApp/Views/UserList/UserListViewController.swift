@@ -25,7 +25,7 @@ class UserListViewController: UIViewController {
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     private lazy var dataSource: UITableViewDiffableDataSource<SectionType, User> = {
         let dataSource = UITableViewDiffableDataSource<SectionType, User>(tableView: tableView) { tableView, indexPath, user in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UserListTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: UserListTableViewCell.className, for: indexPath) as! UserListTableViewCell
             cell.configure(user: user)
             return cell
         }
@@ -50,7 +50,7 @@ class UserListViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         
         // セル登録
-        tableView.register(UINib.init(nibName: "UserListTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        tableView.register(UINib.init(nibName: UserListTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserListTableViewCell.className)
         
         // tableViewの設定
         tableView.dataSource = dataSource
@@ -78,6 +78,11 @@ class UserListViewController: UIViewController {
                 // TODO: ユーザー詳細ページへ遷移する処理を実装
                 owner.tableView.deselectRow(at: indexPath, animated: true)
                 print(indexPath)
+                
+                let user = owner.userList[indexPath.row]
+                let viewController = UserDetailViewController.instantiate()
+                viewController.username = user.name
+                owner.navigationController?.pushViewController(viewController, animated: true)
             })
             .disposed(by: disposeBag)
         

@@ -6,7 +6,6 @@
 //
 
 import RxSwift
-import SwiftUI
 
 protocol UserListViewModelInput {
     func fetchUserList()
