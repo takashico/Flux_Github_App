@@ -10,6 +10,7 @@ import WebKit
 
 class RepositoryDetailViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
+    // urlは必須
     var url: URL!
     
     private var webView: WKWebView!
