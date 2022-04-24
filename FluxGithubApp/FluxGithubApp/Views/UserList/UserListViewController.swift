@@ -75,9 +75,7 @@ class UserListViewController: UIViewController {
         tableView.rx.itemSelected
             .asSignal()
             .emit(with: self, onNext: { owner, indexPath in
-                // TODO: ユーザー詳細ページへ遷移する処理を実装
                 owner.tableView.deselectRow(at: indexPath, animated: true)
-                print(indexPath)
                 
                 let user = owner.userList[indexPath.row]
                 let viewController = UserDetailViewController.instantiate()

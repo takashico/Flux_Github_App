@@ -34,7 +34,6 @@ class UserDetailViewController: UIViewController {
     // リポジトリリスト
     private var reposList = [Repos]() {
         didSet {
-            print(reposList.count)
             tableView.reloadData()
         }
     }
