@@ -8,7 +8,7 @@
 struct UserDetail: Decodable, Equatable, Hashable {
     var id: Int
     var name: String
-    var fullName: String
+    var fullName: String?
     var avatarUrl: String
     var followerCount: Int
     var followingCount: Int

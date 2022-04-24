@@ -22,14 +22,20 @@ class UserDetailTableViewCell: UITableViewCell {
         avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2
     }
     
-    func configure(user: UserDetail) {
-        avatarImageView.kf.setImage(
-            with: URL(string: user.avatarUrl),
-            placeholder: UIImage(systemName: "person.circle.fill")
-        )
-        
-        userNameLabel.text = user.name
-        fullNameLabel.text = user.fullName
-        followerAndFollowingLabel.text = String.init(format: "%dフォロワー・%dフォロー中", user.followerCount, user.followingCount)
+    func configure(user: UserDetail?) {
+        if let user = user {
+            avatarImageView.kf.setImage(
+                with: URL(string: user.avatarUrl),
+                placeholder: UIImage(systemName: "person.circle.fill")
+            )
+            userNameLabel.text = user.name
+            fullNameLabel.text = user.fullName
+            followerAndFollowingLabel.text = String.init(format: "%dフォロワー・%dフォロー中", user.followerCount, user.followingCount)
+        } else {
+            avatarImageView.image = UIImage(systemName: "person.circle.fill")
+            userNameLabel.text = nil
+            fullNameLabel.text = nil
+            followerAndFollowingLabel.text = nil
+        }
     }
 }

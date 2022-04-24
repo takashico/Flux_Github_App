@@ -21,6 +21,11 @@ extension SwinjectStoryboard {
         }
         .inObjectScope(.container)
         
+        defaultContainer.register(ReposRepository.self) { r in
+            ReposRepositoryImpl(apiClient: r.resolve(ApiClient.self)!)
+        }
+        .inObjectScope(.container)
+        
         // Dispatch
         defaultContainer.register(Dispatcher.self) { _ in
             Dispatcher.shared
@@ -50,7 +55,8 @@ extension SwinjectStoryboard {
         defaultContainer.register(UserDetailActionCreator.self) { r in
             UserDetailActionCreator(
                 r.resolve(Dispatcher.self)!,
-                userRepository: r.resolve(UserRepository.self)!
+                userRepository: r.resolve(UserRepository.self)!,
+                reposRepository: r.resolve(ReposRepository.self)!
             )
         }
         .inObjectScope(.container)

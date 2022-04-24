@@ -10,9 +10,25 @@ enum UserDetailAction {
         var user: UserDetail
     }
     
-    struct FirstFetchStart: Action { }
+    struct ReposListFirstFetched: Action {
+        var page: Int
+        var reposList: [Repos]
+        var isDataEnded: Bool
+    }
     
-    struct FirstFetchEnd: Action { }
+    struct ReposListMoreFetched: Action {
+        var page: Int
+        var reposList: [Repos]
+        var isDataEnded: Bool
+    }
+    
+    struct UserDetailFetchStart: Action { }
+    
+    struct UserDetailFetchEnd: Action { }
+    
+    struct ReposListFetchStart: Action { }
+    
+    struct ReposListFetchEnd: Action { }
     
     struct ApiError: Action {
         var error: Error

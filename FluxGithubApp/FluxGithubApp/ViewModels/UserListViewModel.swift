@@ -75,12 +75,7 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
     
     func fetchMore() {
         let state = store.state.value
-        
         guard let since = state.users.last?.id else { return }
-        // 読み込み中 or すべてのデータ読み込み済み or 初回データ取得未取得
-        if state.isLoading || state.isDataEnded || !state.isFirstFetched {
-            return
-        }
         
         actionCreator.moreFetchUserList(since: since, perPage: PER_PAGE)
     }

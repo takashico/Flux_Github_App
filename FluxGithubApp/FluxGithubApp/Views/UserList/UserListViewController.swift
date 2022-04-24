@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 import RxSwift
 import PKHUD
 
@@ -32,6 +31,7 @@ class UserListViewController: UIViewController {
         
         return dataSource
     }()
+    // ユーザーリスト
     private var userList = [User]() {
         didSet {
             var snapshot = NSDiffableDataSourceSnapshot<SectionType, User>()
@@ -40,7 +40,7 @@ class UserListViewController: UIViewController {
             dataSource.apply(snapshot, animatingDifferences: true)
         }
     }
-    private var canFetchMore: Bool = false
+    private var canFetchMore = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +92,7 @@ class UserListViewController: UIViewController {
             .drive(onNext: { [weak self] cell, indexPath in
                 guard let strongSelf = self else { return }
                 
-                if strongSelf.canFetchMore && indexPath.row >= (strongSelf.userList.count - 2) {
+                if strongSelf.canFetchMore, indexPath.row >= (strongSelf.userList.count - 2) {
                     // 次ページデータ取得
                     strongSelf.viewModelInput?.fetchMore()
                 }
