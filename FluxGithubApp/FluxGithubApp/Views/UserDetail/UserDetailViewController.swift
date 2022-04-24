@@ -67,10 +67,16 @@ class UserDetailViewController: UIViewController {
                 if SectionType(rawValue: indexPath.section) != .reposList {
                     return
                 }
-                // TODO: リポジトリセクションのみWebViewに遷移する
+                
                 owner.tableView.deselectRow(at: indexPath, animated: true)
                 
-                print(indexPath)
+                guard let url = URL(string: owner.reposList[indexPath.row].htmlUrl) else {
+                    return
+                }
+                
+                let viewController = RepositoryDetailViewController()
+                viewController.url = url
+                owner.navigationController?.pushViewController(viewController, animated: true)
             })
             .disposed(by: disposeBag)
 
