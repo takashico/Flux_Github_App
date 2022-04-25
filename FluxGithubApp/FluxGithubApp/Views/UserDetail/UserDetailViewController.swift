@@ -43,6 +43,8 @@ class UserDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = username
+        
         // セル登録
         tableView.register(UINib.init(nibName: UserDetailTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserDetailTableViewCell.className)
         tableView.register(UINib.init(nibName: UserReposTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserReposTableViewCell.className)
