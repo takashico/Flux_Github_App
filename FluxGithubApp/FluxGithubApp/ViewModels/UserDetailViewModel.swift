@@ -82,17 +82,13 @@ class UserDetailViewModel: UserDetailViewModelInput, UserDetailViewModelOutput {
     }
     
     func fetchReposList(username: String) {
-        actionCreator.fetchUserRepositories(
-            username: username,
-            page: 1,
-            perPage: PER_PAGE
-        )
+        actionCreator.firstFetchUserRepositories(username: username, perPage: PER_PAGE)
     }
     
     func fetchMoreReposList(username: String) {
         let state = store.state.value
         
-        actionCreator.fetchUserRepositories(
+        actionCreator.moreFetchUserRepositories(
             username: username,
             page: state.reposPage + 1,
             perPage: PER_PAGE
