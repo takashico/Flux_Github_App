@@ -28,7 +28,7 @@ class UserDetailViewController: UIViewController {
     // ユーザー詳細
     private var user: UserDetail? {
         didSet {
-            tableView.reloadData()
+            tableView.reloadSections(IndexSet(integer: SectionType.userDetail.rawValue), with: .fade)
         }
     }
     // リポジトリリスト
