@@ -1,3 +1,7 @@
+## アプリ画面
+
+https://user-images.githubusercontent.com/5306074/165024595-ba4cb002-7f7e-481e-b6fe-be43366c7793.mov
+
 ## アーキテクチャ構成
 - Flux + MVVMを採用
     - 本アプリはUIKitで構築されているが、今後SwiftUIへ移行しやすいアーキテクチャを採用。
