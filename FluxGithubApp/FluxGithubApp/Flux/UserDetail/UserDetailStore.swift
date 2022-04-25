@@ -44,8 +44,8 @@ final class UserDetailStore: Store {
         case let action as UserDetailAction.ReposListFirstFetched:
             state.accept(UserDetailState(
                 user: current.user,
-                reposList: createViewableReposList(reposList: action.reposList),
-                reposPage: action.page,
+                reposList: filteredReposList(reposList: action.reposList),
+                reposPage: 1,
                 isLoading: false,
                 isReposListFirstFetched: true,
                 isReposListLoading: current.isReposListLoading,
@@ -61,7 +61,7 @@ final class UserDetailStore: Store {
         case let action as UserDetailAction.ReposListMoreFetched:
             state.accept(UserDetailState(
                 user: current.user,
-                reposList: current.reposList + createViewableReposList(reposList: action.reposList),
+                reposList: current.reposList + filteredReposList(reposList: action.reposList),
                 reposPage: action.page,
                 isLoading: false,
                 isReposListFirstFetched: current.isReposListFirstFetched,
@@ -114,7 +114,33 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserDetailAction.ReposListFetchStart:
+        case _ as UserDetailAction.ReposListFirstFetchStart:
+            state.accept(UserDetailState(
+                user: current.user,
+                reposList: [],
+                reposPage: 1,
+                isLoading: current.isLoading,
+                isReposListFirstFetched: current.isReposListFirstFetched,
+                isReposListLoading: true,
+                isReposListDataEnded: current.isReposListDataEnded,
+                canReposListFetchMore: false,
+                apiError: nil
+            ))
+            
+        case _ as UserDetailAction.ReposListFirstFetchEnd:
+            state.accept(UserDetailState(
+                user: current.user,
+                reposList: current.reposList,
+                reposPage: current.reposPage,
+                isLoading: current.isLoading,
+                isReposListFirstFetched: current.isReposListFirstFetched,
+                isReposListLoading: false,
+                isReposListDataEnded: current.isReposListDataEnded,
+                canReposListFetchMore: current.canReposListFetchMore,
+                apiError: nil
+            ))
+            
+        case _ as UserDetailAction.ReposListMoreFetchStart:
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: current.reposList,
@@ -127,7 +153,7 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserDetailAction.ReposListFetchEnd:
+        case _ as UserDetailAction.ReposListMoreFetchEnd:
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: current.reposList,
@@ -145,8 +171,8 @@ final class UserDetailStore: Store {
         }
     }
     
-    /// 表示用のReposListを作成（Forkリポジトリを除く処理）
-    private func createViewableReposList(reposList: [Repos]) -> [Repos] {
+    /// 表示用のReposListを生成（Forkリポジトリを除く処理）
+    private func filteredReposList(reposList: [Repos]) -> [Repos] {
         return reposList.filter { !$0.isFork }
     }
     

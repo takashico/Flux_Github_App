@@ -28,7 +28,7 @@ class UserDetailViewController: UIViewController {
     // ユーザー詳細
     private var user: UserDetail? {
         didSet {
-            tableView.reloadData()
+            tableView.reloadSections(IndexSet(integer: SectionType.userDetail.rawValue), with: .fade)
         }
     }
     // リポジトリリスト
@@ -42,6 +42,8 @@ class UserDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = username
         
         // セル登録
         tableView.register(UINib.init(nibName: UserDetailTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserDetailTableViewCell.className)
