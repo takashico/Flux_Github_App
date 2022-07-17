@@ -23,40 +23,51 @@ final class UserListStore: Store {
     )
     
     override func onAction(action: Action) {
+        switch action {
+        case let action as UserListAction:
+            onAction(action: action)
+        default:
+            return
+        }
+    }
+}
+
+extension UserListStore {
+    private func onAction(action: UserListAction) {
         let current = state.value
         
         switch action {
-        case let action as UserListAction.FirstFetched:
+        case .firstFetched(let isDataEnded, let users):
             state.accept(UserListState(
-                users: action.users,
+                users: users,
                 isLoading: false,
                 isMoreLoading: false,
                 isFirstFetched: true,
-                isDataEnded: action.isDataEnded,
+                isDataEnded: isDataEnded,
                 canFetchMore: canFetchMore(
                     isMoreLoading: false,
                     isFirstFetched: true,
-                    isDataEnded: action.isDataEnded
+                    isDataEnded: isDataEnded
                 ),
                 apiError: nil
             ))
             
-        case let action as UserListAction.MoreFetched:
+        case .moreFetched(let isDataEnded, let users):
             state.accept(UserListState(
-                users: current.users + action.users,
+                users: current.users + users,
                 isLoading: false,
                 isMoreLoading: false,
                 isFirstFetched: current.isFirstFetched,
-                isDataEnded: action.isDataEnded,
+                isDataEnded: isDataEnded,
                 canFetchMore: canFetchMore(
                     isMoreLoading: false,
                     isFirstFetched: true,
-                    isDataEnded: action.isDataEnded
+                    isDataEnded: isDataEnded
                 ),
                 apiError: nil
             ))
             
-        case let action as UserListAction.ApiError:
+        case .apiError(let error):
             state.accept(UserListState(
                 users: current.users,
                 isLoading: false,
@@ -64,10 +75,10 @@ final class UserListStore: Store {
                 isFirstFetched: true,
                 isDataEnded: current.isDataEnded,
                 canFetchMore: false,
-                apiError: action.error
+                apiError: error
             ))
             
-        case _ as UserListAction.FirstFetchStart:
+        case .firstFetchStart:
             state.accept(UserListState(
                 users: current.users,
                 isLoading: true,
@@ -78,7 +89,8 @@ final class UserListStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserListAction.FirstFetchEnd:
+            
+        case .firstFetchEnd:
             state.accept(UserListState(
                 users: current.users,
                 isLoading: false,
@@ -89,7 +101,7 @@ final class UserListStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserListAction.MoreFetchStart:
+        case .moreFetchStart:
             state.accept(UserListState(
                 users: current.users,
                 isLoading: false,
@@ -100,7 +112,7 @@ final class UserListStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserListAction.MoreFetchEnd:
+        case .moreFetchEnd:
             state.accept(UserListState(
                 users: current.users,
                 isLoading: false,
@@ -110,8 +122,6 @@ final class UserListStore: Store {
                 canFetchMore: current.canFetchMore,
                 apiError: nil
             ))
-        default:
-            break
         }
     }
     

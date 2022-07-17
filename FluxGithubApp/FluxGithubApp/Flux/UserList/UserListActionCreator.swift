@@ -17,22 +17,22 @@ final class UserListActionCreator: ActionCreator {
     
     func firstFetchUserList(perPage: Int) {
         // 読み込み開始
-        dispatch(UserListAction.FirstFetchStart())
+        dispatch(UserListAction.firstFetchStart)
         
         userRepository.fetchList(since: 0, perPage: perPage)
             .subscribe(with: self, onSuccess: { owner, users in
                 // 読み込み終了
-                owner.dispatch(UserListAction.FirstFetchEnd())
+                owner.dispatch(UserListAction.firstFetchEnd)
                 
-                owner.dispatch(UserListAction.FirstFetched(
+                owner.dispatch(UserListAction.firstFetched(
                     isDataEnded: users.count < perPage,
                     users: users
                 ))
             }, onFailure: { owner, error in
                 // 読み込み終了
-                owner.dispatch(UserListAction.FirstFetchEnd())
+                owner.dispatch(UserListAction.firstFetchEnd)
                 
-                owner.dispatch(UserListAction.ApiError(
+                owner.dispatch(UserListAction.apiError(
                     error: error
                 ))
             })
@@ -41,22 +41,22 @@ final class UserListActionCreator: ActionCreator {
     
     func moreFetchUserList(since: Int, perPage: Int) {
         // 読み込み開始
-        dispatch(UserListAction.MoreFetchStart())
+        dispatch(UserListAction.moreFetchStart)
         
         userRepository.fetchList(since: since, perPage: perPage)
             .subscribe(with: self, onSuccess: { owner, users in
                 // 読み込み終了
-                owner.dispatch(UserListAction.MoreFetchEnd())
+                owner.dispatch(UserListAction.moreFetchEnd)
                 
-                owner.dispatch(UserListAction.MoreFetched(
+                owner.dispatch(UserListAction.moreFetched(
                     isDataEnded: users.count < perPage,
                     users: users
                 ))
             }, onFailure: { owner, error in
                 // 読み込み終了
-                owner.dispatch(UserListAction.MoreFetchEnd())
+                owner.dispatch(UserListAction.moreFetchEnd)
                 
-                owner.dispatch(UserListAction.ApiError(
+                owner.dispatch(UserListAction.apiError(
                     error: error
                 ))
             })
