@@ -6,7 +6,6 @@
 //
 
 enum UserListAction: Action {
-    
     case firstFetched(
         isDataEnded: Bool,
         users: [User]
@@ -15,9 +14,7 @@ enum UserListAction: Action {
         isDataEnded: Bool,
         users: [User]
     )
-    case apiError(
-        error: Error
-    )
+    case apiError(error: Error)
     case firstFetchStart
     case firstFetchEnd
     case moreFetchStart

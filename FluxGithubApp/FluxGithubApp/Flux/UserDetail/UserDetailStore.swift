@@ -25,12 +25,23 @@ final class UserDetailStore: Store {
     )
     
     override func onAction(action: Action) {
+        switch action {
+        case let action as UserDetailAction:
+            onAction(action: action)
+        default:
+            return
+        }
+    }
+}
+
+extension UserDetailStore {
+    private func onAction(action: UserDetailAction) {
         let current = state.value
         
         switch action {
-        case let action as UserDetailAction.UserDetailFetched:
+        case .userDetailFetched(let user):
             state.accept(UserDetailState(
-                user: action.user,
+                user: user,
                 reposList: current.reposList,
                 reposPage: current.reposPage,
                 isLoading: false,
@@ -41,10 +52,10 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case let action as UserDetailAction.ReposListFirstFetched:
+        case .reposListFirstFetched(let reposList, let isDataEnded):
             state.accept(UserDetailState(
                 user: current.user,
-                reposList: filteredReposList(reposList: action.reposList),
+                reposList: filteredReposList(reposList: reposList),
                 reposPage: 1,
                 isLoading: false,
                 isReposListFirstFetched: true,
@@ -52,30 +63,30 @@ final class UserDetailStore: Store {
                 isReposListDataEnded: current.isReposListDataEnded,
                 canReposListFetchMore: canReposListFetchMore(
                     isLoading: current.isReposListLoading,
-                    isDataEnded: action.isDataEnded,
+                    isDataEnded: isDataEnded,
                     isFirstFetched: true
                 ),
                 apiError: nil
             ))
             
-        case let action as UserDetailAction.ReposListMoreFetched:
+        case .reposListMoreFetched(let page, let reposList, let isDataEnded):
             state.accept(UserDetailState(
                 user: current.user,
-                reposList: current.reposList + filteredReposList(reposList: action.reposList),
-                reposPage: action.page,
+                reposList: current.reposList + filteredReposList(reposList: reposList),
+                reposPage: page,
                 isLoading: false,
                 isReposListFirstFetched: current.isReposListFirstFetched,
                 isReposListLoading: current.isReposListLoading,
                 isReposListDataEnded: current.isReposListDataEnded,
                 canReposListFetchMore: canReposListFetchMore(
                     isLoading: current.isReposListLoading,
-                    isDataEnded: action.isDataEnded,
+                    isDataEnded: isDataEnded,
                     isFirstFetched: current.isReposListFirstFetched
                 ),
                 apiError: nil
             ))
             
-        case let action as UserDetailAction.ApiError:
+        case .apiError(let error):
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: current.reposList,
@@ -85,10 +96,10 @@ final class UserDetailStore: Store {
                 isReposListLoading: current.isReposListLoading,
                 isReposListDataEnded: current.isReposListDataEnded,
                 canReposListFetchMore: current.canReposListFetchMore,
-                apiError: action.error
+                apiError: error
             ))
             
-        case _ as UserDetailAction.UserDetailFetchStart:
+        case .userDetailFetchStart:
             state.accept(UserDetailState(
                 user: nil,
                 reposList: current.reposList,
@@ -101,7 +112,7 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserDetailAction.UserDetailFetchEnd:
+        case .userDetailFetchEnd:
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: current.reposList,
@@ -114,7 +125,7 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserDetailAction.ReposListFirstFetchStart:
+        case .reposListFirstFetchStart:
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: [],
@@ -127,7 +138,7 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserDetailAction.ReposListFirstFetchEnd:
+        case .reposListFirstFetchEnd:
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: current.reposList,
@@ -140,7 +151,7 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserDetailAction.ReposListMoreFetchStart:
+        case .reposListMoreFetchStart:
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: current.reposList,
@@ -153,7 +164,7 @@ final class UserDetailStore: Store {
                 apiError: nil
             ))
             
-        case _ as UserDetailAction.ReposListMoreFetchEnd:
+        case .reposListMoreFetchEnd:
             state.accept(UserDetailState(
                 user: current.user,
                 reposList: current.reposList,
@@ -165,12 +176,8 @@ final class UserDetailStore: Store {
                 canReposListFetchMore: current.canReposListFetchMore,
                 apiError: nil
             ))
-            
-        default:
-            break
         }
     }
-    
     /// 表示用のReposListを生成（Forkリポジトリを除く処理）
     private func filteredReposList(reposList: [Repos]) -> [Repos] {
         return reposList.filter { !$0.isFork }

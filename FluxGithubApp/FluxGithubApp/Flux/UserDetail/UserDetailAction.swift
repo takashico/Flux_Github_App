@@ -5,36 +5,23 @@
 //  Created by Takahashi Shiko on 2022/04/24.
 //
 
-enum UserDetailAction {
-    struct UserDetailFetched: Action {
-        var user: UserDetail
-    }
-    
-    struct ReposListFirstFetched: Action {
-        var reposList: [Repos]
-        var isDataEnded: Bool
-    }
-    
-    struct ReposListMoreFetched: Action {
-        var page: Int
-        var reposList: [Repos]
-        var isDataEnded: Bool
-    }
-    
-    struct UserDetailFetchStart: Action { }
-    
-    struct UserDetailFetchEnd: Action { }
-    
-    struct ReposListFirstFetchStart: Action { }
-    
-    struct ReposListFirstFetchEnd: Action { }
-    
-    struct ReposListMoreFetchStart: Action { }
-    
-    struct ReposListMoreFetchEnd: Action { }
-    
-    struct ApiError: Action {
-        var error: Error
-    }
+enum UserDetailAction: Action {
+    case userDetailFetched(user: UserDetail)
+    case reposListFirstFetched(
+        reposList: [Repos],
+        isDataEnded: Bool
+    )
+    case reposListMoreFetched(
+        page: Int,
+        reposList: [Repos],
+        isDataEnded: Bool
+    )
+    case apiError(error: Error)
+    case userDetailFetchStart
+    case userDetailFetchEnd
+    case reposListFirstFetchStart
+    case reposListFirstFetchEnd
+    case reposListMoreFetchStart
+    case reposListMoreFetchEnd
 }
 
