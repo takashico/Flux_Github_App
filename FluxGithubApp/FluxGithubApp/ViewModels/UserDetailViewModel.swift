@@ -41,37 +41,37 @@ class UserDetailViewModel: UserDetailViewModelInput, UserDetailViewModelOutput {
         self.actionCreator = actionCreator
         self.store = store
         
-        self.user = store.state.map { state in
+        self.user = store.stateObservable.map { state in
             state.user
         }
         .share()
         
-        self.reposList = store.state.map { state in
+        self.reposList = store.stateObservable.map { state in
             state.reposList
         }
         .share()
         
-        self.isLoading = store.state.map { state in
+        self.isLoading = store.stateObservable.map { state in
             state.isLoading
         }
         .share()
         
-        self.isReposListLoading = store.state.map { state in
+        self.isReposListLoading = store.stateObservable.map { state in
             state.isReposListLoading
         }
         .share()
         
-        self.isReposListDataEnded = store.state.map { state in
+        self.isReposListDataEnded = store.stateObservable.map { state in
             state.isReposListDataEnded
         }
         .share()
         
-        self.canReposListFetchMore = store.state.map { state in
+        self.canReposListFetchMore = store.stateObservable.map { state in
             state.canReposListFetchMore
         }
         .share()
         
-        self.apiError = store.state.map { state in
+        self.apiError = store.stateObservable.map { state in
             state.apiError
         }
         .share()
@@ -86,11 +86,9 @@ class UserDetailViewModel: UserDetailViewModelInput, UserDetailViewModelOutput {
     }
     
     func fetchMoreReposList(username: String) {
-        let state = store.state.value
-        
         actionCreator.moreFetchUserRepositories(
             username: username,
-            page: state.reposPage + 1,
+            page: store.state.reposPage + 1,
             perPage: PER_PAGE
         )
     }

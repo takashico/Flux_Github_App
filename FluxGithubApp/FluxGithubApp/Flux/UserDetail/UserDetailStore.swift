@@ -10,7 +10,7 @@ import RxRelay
 
 final class UserDetailStore: Store {
     
-    let state = BehaviorRelay<UserDetailState>(
+    private let _state = BehaviorRelay<UserDetailState>(
         value: UserDetailState(
             user: nil,
             reposList: [],
@@ -24,6 +24,14 @@ final class UserDetailStore: Store {
         )
     )
     
+    var state: UserDetailState {
+        return _state.value
+    }
+    
+    var stateObservable: Observable<UserDetailState> {
+        return _state.asObservable()
+    }
+    
     override func onAction(action: Action) {
         switch action {
         case let action as UserDetailAction:
@@ -36,33 +44,31 @@ final class UserDetailStore: Store {
 
 extension UserDetailStore {
     private func onAction(action: UserDetailAction) {
-        let current = state.value
-        
         switch action {
         case .userDetailFetched(let user):
-            state.accept(UserDetailState(
+            _state.accept(UserDetailState(
                 user: user,
-                reposList: current.reposList,
-                reposPage: current.reposPage,
+                reposList: state.reposList,
+                reposPage: state.reposPage,
                 isLoading: false,
-                isReposListFirstFetched: current.isReposListFirstFetched,
-                isReposListLoading: current.isReposListLoading,
-                isReposListDataEnded: current.isReposListDataEnded,
-                canReposListFetchMore: current.canReposListFetchMore,
+                isReposListFirstFetched: state.isReposListFirstFetched,
+                isReposListLoading: state.isReposListLoading,
+                isReposListDataEnded: state.isReposListDataEnded,
+                canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
             
         case .reposListFirstFetched(let reposList, let isDataEnded):
-            state.accept(UserDetailState(
-                user: current.user,
+            _state.accept(UserDetailState(
+                user: state.user,
                 reposList: filteredReposList(reposList: reposList),
                 reposPage: 1,
                 isLoading: false,
                 isReposListFirstFetched: true,
-                isReposListLoading: current.isReposListLoading,
-                isReposListDataEnded: current.isReposListDataEnded,
+                isReposListLoading: state.isReposListLoading,
+                isReposListDataEnded: state.isReposListDataEnded,
                 canReposListFetchMore: canReposListFetchMore(
-                    isLoading: current.isReposListLoading,
+                    isLoading: state.isReposListLoading,
                     isDataEnded: isDataEnded,
                     isFirstFetched: true
                 ),
@@ -70,110 +76,110 @@ extension UserDetailStore {
             ))
             
         case .reposListMoreFetched(let page, let reposList, let isDataEnded):
-            state.accept(UserDetailState(
-                user: current.user,
-                reposList: current.reposList + filteredReposList(reposList: reposList),
+            _state.accept(UserDetailState(
+                user: state.user,
+                reposList: state.reposList + filteredReposList(reposList: reposList),
                 reposPage: page,
                 isLoading: false,
-                isReposListFirstFetched: current.isReposListFirstFetched,
-                isReposListLoading: current.isReposListLoading,
-                isReposListDataEnded: current.isReposListDataEnded,
+                isReposListFirstFetched: state.isReposListFirstFetched,
+                isReposListLoading: state.isReposListLoading,
+                isReposListDataEnded: state.isReposListDataEnded,
                 canReposListFetchMore: canReposListFetchMore(
-                    isLoading: current.isReposListLoading,
+                    isLoading: state.isReposListLoading,
                     isDataEnded: isDataEnded,
-                    isFirstFetched: current.isReposListFirstFetched
+                    isFirstFetched: state.isReposListFirstFetched
                 ),
                 apiError: nil
             ))
             
         case .apiError(let error):
-            state.accept(UserDetailState(
-                user: current.user,
-                reposList: current.reposList,
-                reposPage: current.reposPage,
+            _state.accept(UserDetailState(
+                user: state.user,
+                reposList: state.reposList,
+                reposPage: state.reposPage,
                 isLoading: false,
-                isReposListFirstFetched: current.isReposListFirstFetched,
-                isReposListLoading: current.isReposListLoading,
-                isReposListDataEnded: current.isReposListDataEnded,
-                canReposListFetchMore: current.canReposListFetchMore,
+                isReposListFirstFetched: state.isReposListFirstFetched,
+                isReposListLoading: state.isReposListLoading,
+                isReposListDataEnded: state.isReposListDataEnded,
+                canReposListFetchMore: state.canReposListFetchMore,
                 apiError: error
             ))
             
         case .userDetailFetchStart:
-            state.accept(UserDetailState(
+            _state.accept(UserDetailState(
                 user: nil,
-                reposList: current.reposList,
-                reposPage: current.reposPage,
+                reposList: state.reposList,
+                reposPage: state.reposPage,
                 isLoading: true,
-                isReposListFirstFetched: current.isReposListFirstFetched,
-                isReposListLoading: current.isReposListLoading,
-                isReposListDataEnded: current.isReposListDataEnded,
-                canReposListFetchMore: current.canReposListFetchMore,
+                isReposListFirstFetched: state.isReposListFirstFetched,
+                isReposListLoading: state.isReposListLoading,
+                isReposListDataEnded: state.isReposListDataEnded,
+                canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
             
         case .userDetailFetchEnd:
-            state.accept(UserDetailState(
-                user: current.user,
-                reposList: current.reposList,
-                reposPage: current.reposPage,
+            _state.accept(UserDetailState(
+                user: state.user,
+                reposList: state.reposList,
+                reposPage: state.reposPage,
                 isLoading: false,
-                isReposListFirstFetched: current.isReposListFirstFetched,
-                isReposListLoading: current.isReposListLoading,
-                isReposListDataEnded: current.isReposListDataEnded,
-                canReposListFetchMore: current.canReposListFetchMore,
+                isReposListFirstFetched: state.isReposListFirstFetched,
+                isReposListLoading: state.isReposListLoading,
+                isReposListDataEnded: state.isReposListDataEnded,
+                canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
             
         case .reposListFirstFetchStart:
-            state.accept(UserDetailState(
-                user: current.user,
+            _state.accept(UserDetailState(
+                user: state.user,
                 reposList: [],
                 reposPage: 1,
-                isLoading: current.isLoading,
-                isReposListFirstFetched: current.isReposListFirstFetched,
+                isLoading: state.isLoading,
+                isReposListFirstFetched: state.isReposListFirstFetched,
                 isReposListLoading: true,
-                isReposListDataEnded: current.isReposListDataEnded,
+                isReposListDataEnded: state.isReposListDataEnded,
                 canReposListFetchMore: false,
                 apiError: nil
             ))
             
         case .reposListFirstFetchEnd:
-            state.accept(UserDetailState(
-                user: current.user,
-                reposList: current.reposList,
-                reposPage: current.reposPage,
-                isLoading: current.isLoading,
-                isReposListFirstFetched: current.isReposListFirstFetched,
+            _state.accept(UserDetailState(
+                user: state.user,
+                reposList: state.reposList,
+                reposPage: state.reposPage,
+                isLoading: state.isLoading,
+                isReposListFirstFetched: state.isReposListFirstFetched,
                 isReposListLoading: false,
-                isReposListDataEnded: current.isReposListDataEnded,
-                canReposListFetchMore: current.canReposListFetchMore,
+                isReposListDataEnded: state.isReposListDataEnded,
+                canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
             
         case .reposListMoreFetchStart:
-            state.accept(UserDetailState(
-                user: current.user,
-                reposList: current.reposList,
-                reposPage: current.reposPage,
-                isLoading: current.isLoading,
-                isReposListFirstFetched: current.isReposListFirstFetched,
+            _state.accept(UserDetailState(
+                user: state.user,
+                reposList: state.reposList,
+                reposPage: state.reposPage,
+                isLoading: state.isLoading,
+                isReposListFirstFetched: state.isReposListFirstFetched,
                 isReposListLoading: true,
-                isReposListDataEnded: current.isReposListDataEnded,
+                isReposListDataEnded: state.isReposListDataEnded,
                 canReposListFetchMore: false,
                 apiError: nil
             ))
             
         case .reposListMoreFetchEnd:
-            state.accept(UserDetailState(
-                user: current.user,
-                reposList: current.reposList,
-                reposPage: current.reposPage,
-                isLoading: current.isLoading,
-                isReposListFirstFetched: current.isReposListFirstFetched,
+            _state.accept(UserDetailState(
+                user: state.user,
+                reposList: state.reposList,
+                reposPage: state.reposPage,
+                isLoading: state.isLoading,
+                isReposListFirstFetched: state.isReposListFirstFetched,
                 isReposListLoading: false,
-                isReposListDataEnded: current.isReposListDataEnded,
-                canReposListFetchMore: current.canReposListFetchMore,
+                isReposListDataEnded: state.isReposListDataEnded,
+                canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
         }

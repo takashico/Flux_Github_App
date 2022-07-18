@@ -38,32 +38,33 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
         self.actionCreator = actionCreator
         self.store = store
         
-        self.users = store.state.map { state in
+        
+        self.users = store.stateObservable.map { state in
             state.users
         }
         .share()
         
-        self.canFetchMore = store.state.map { state in
+        self.canFetchMore = store.stateObservable.map { state in
             state.canFetchMore
         }
         .share()
         
-        self.isDataEnded = store.state.map { state in
+        self.isDataEnded = store.stateObservable.map { state in
             state.isDataEnded
         }
         .share()
         
-        self.isLoading = store.state.map { state in
+        self.isLoading = store.stateObservable.map { state in
             state.isLoading
         }
         .share()
         
-        self.isMoreLoading = store.state.map { state in
+        self.isMoreLoading = store.stateObservable.map { state in
             state.isMoreLoading
         }
         .share()
         
-        self.apiError = store.state.map { state in
+        self.apiError = store.stateObservable.map { state in
             state.apiError
         }
         .share()
@@ -74,8 +75,7 @@ class UserListViewModel: UserListViewModelInput, UserListViewModelOutput {
     }
     
     func fetchMore() {
-        let state = store.state.value
-        guard let since = state.users.last?.id else { return }
+        guard let since = store.state.users.last?.id else { return }
         
         actionCreator.moreFetchUserList(since: since, perPage: PER_PAGE)
     }

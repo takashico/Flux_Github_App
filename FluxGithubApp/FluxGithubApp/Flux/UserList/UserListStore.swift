@@ -10,7 +10,7 @@ import RxRelay
 
 final class UserListStore: Store {
     
-    let state = BehaviorRelay<UserListState>(
+    private let _state = BehaviorRelay<UserListState>(
         value: UserListState(
             users: [],
             isLoading: false,
@@ -21,6 +21,14 @@ final class UserListStore: Store {
             apiError: nil
         )
     )
+    
+    var state: UserListState {
+        return _state.value
+    }
+    
+    var stateObservable: Observable<UserListState> {
+        return _state.asObservable()
+    }
     
     override func onAction(action: Action) {
         switch action {
@@ -34,11 +42,9 @@ final class UserListStore: Store {
 
 extension UserListStore {
     private func onAction(action: UserListAction) {
-        let current = state.value
-        
         switch action {
         case .firstFetched(let isDataEnded, let users):
-            state.accept(UserListState(
+            _state.accept(UserListState(
                 users: users,
                 isLoading: false,
                 isMoreLoading: false,
@@ -53,11 +59,11 @@ extension UserListStore {
             ))
             
         case .moreFetched(let isDataEnded, let users):
-            state.accept(UserListState(
-                users: current.users + users,
+            _state.accept(UserListState(
+                users: state.users + users,
                 isLoading: false,
                 isMoreLoading: false,
-                isFirstFetched: current.isFirstFetched,
+                isFirstFetched: state.isFirstFetched,
                 isDataEnded: isDataEnded,
                 canFetchMore: canFetchMore(
                     isMoreLoading: false,
@@ -68,58 +74,58 @@ extension UserListStore {
             ))
             
         case .apiError(let error):
-            state.accept(UserListState(
-                users: current.users,
+            _state.accept(UserListState(
+                users: state.users,
                 isLoading: false,
                 isMoreLoading: false,
                 isFirstFetched: true,
-                isDataEnded: current.isDataEnded,
+                isDataEnded: state.isDataEnded,
                 canFetchMore: false,
                 apiError: error
             ))
             
         case .firstFetchStart:
-            state.accept(UserListState(
-                users: current.users,
+            _state.accept(UserListState(
+                users: state.users,
                 isLoading: true,
                 isMoreLoading: false,
-                isFirstFetched: current.isFirstFetched,
-                isDataEnded: current.isDataEnded,
+                isFirstFetched: state.isFirstFetched,
+                isDataEnded: state.isDataEnded,
                 canFetchMore: false,
                 apiError: nil
             ))
             
             
         case .firstFetchEnd:
-            state.accept(UserListState(
-                users: current.users,
+            _state.accept(UserListState(
+                users: state.users,
                 isLoading: false,
                 isMoreLoading: false,
-                isFirstFetched: current.isFirstFetched,
-                isDataEnded: current.isDataEnded,
-                canFetchMore: current.canFetchMore,
+                isFirstFetched: state.isFirstFetched,
+                isDataEnded: state.isDataEnded,
+                canFetchMore: state.canFetchMore,
                 apiError: nil
             ))
             
         case .moreFetchStart:
-            state.accept(UserListState(
-                users: current.users,
+            _state.accept(UserListState(
+                users: state.users,
                 isLoading: false,
                 isMoreLoading: true,
                 isFirstFetched: true,
-                isDataEnded: current.isDataEnded,
+                isDataEnded: state.isDataEnded,
                 canFetchMore: false,
                 apiError: nil
             ))
             
         case .moreFetchEnd:
-            state.accept(UserListState(
-                users: current.users,
+            _state.accept(UserListState(
+                users: state.users,
                 isLoading: false,
                 isMoreLoading: false,
                 isFirstFetched: true,
-                isDataEnded: current.isDataEnded,
-                canFetchMore: current.canFetchMore,
+                isDataEnded: state.isDataEnded,
+                canFetchMore: state.canFetchMore,
                 apiError: nil
             ))
         }
