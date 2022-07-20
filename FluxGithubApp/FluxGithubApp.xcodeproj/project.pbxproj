@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		086D676228884F85003C0F4E /* Transitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D676128884F85003C0F4E /* Transitioner.swift */; };
 		192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192373C828117373004BF245 /* UserListTableViewCell.swift */; };
 		192373CB28117373004BF245 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 192373C928117373004BF245 /* UserListTableViewCell.xib */; };
 		192373CE28117855004BF245 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 192373CD28117855004BF245 /* Kingfisher */; };
@@ -81,6 +82,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		086D676128884F85003C0F4E /* Transitioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitioner.swift; sourceTree = "<group>"; };
 		192373C828117373004BF245 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		192373C928117373004BF245 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		192635D32814646300129705 /* UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.swift; sourceTree = "<group>"; };
@@ -166,6 +168,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		086D676028884F52003C0F4E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				086D676128884F85003C0F4E /* Transitioner.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		194A5617280DBA2D003E8EBB = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +371,7 @@
 		1975F35F2815436A007C96F4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				086D676028884F52003C0F4E /* Protocols */,
 				1975F36028154370007C96F4 /* Extentions */,
 			);
 			path = Common;
@@ -557,6 +568,7 @@
 				194A568B2811487C003E8EBB /* User.swift in Sources */,
 				1991207C281599BD004B3AA5 /* Repos.swift in Sources */,
 				194A568928107B19003E8EBB /* UserListActionCreator.swift in Sources */,
+				086D676228884F85003C0F4E /* Transitioner.swift in Sources */,
 				1991207F2815A9F7004B3AA5 /* UserReposTableViewCell.swift in Sources */,
 				194A5686281079FA003E8EBB /* UserListViewModel.swift in Sources */,
 				192635D42814646300129705 /* UserDetail.swift in Sources */,
