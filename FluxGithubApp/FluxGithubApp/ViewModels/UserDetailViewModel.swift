@@ -6,11 +6,13 @@
 //
 
 import RxSwift
+import Foundation
 
 protocol UserDetailViewModelInput {
     func fetchUserDetail(username: String)
     func fetchReposList(username: String)
     func fetchMoreReposList(username: String)
+    func didSelectRepositoryRow(at indexPath: IndexPath)
 }
 
 protocol UserDetailViewModelOutput {
@@ -23,11 +25,12 @@ protocol UserDetailViewModelOutput {
     var apiError: Observable<Error?> { get }
 }
 
-class UserDetailViewModel: UserDetailViewModelInput, UserDetailViewModelOutput {
+final class UserDetailViewModel: UserDetailViewModelOutput {
     private let PER_PAGE = 20
     
     private let actionCreator: UserDetailActionCreator
     private let store: UserDetailStore
+    private var router: UserDetailRouter?
     
     var user: Observable<UserDetail?>
     var reposList: Observable<[Repos]>
@@ -77,6 +80,12 @@ class UserDetailViewModel: UserDetailViewModelInput, UserDetailViewModelOutput {
         .share()
     }
     
+    func injectRouter(_ router: UserDetailRouter) {
+        self.router = router
+    }
+}
+
+extension UserDetailViewModel: UserDetailViewModelInput {
     func fetchUserDetail(username: String) {
         actionCreator.fetchUserDetail(username: username)
     }
@@ -91,5 +100,13 @@ class UserDetailViewModel: UserDetailViewModelInput, UserDetailViewModelOutput {
             page: store.state.reposPage + 1,
             perPage: PER_PAGE
         )
+    }
+    
+    func didSelectRepositoryRow(at indexPath: IndexPath) {
+        guard let url = URL(string: store.state.reposList[indexPath.row].htmlUrl) else {
+            return
+        }
+        
+        router?.transitionToRepositoryDetail(url: url)
     }
 }

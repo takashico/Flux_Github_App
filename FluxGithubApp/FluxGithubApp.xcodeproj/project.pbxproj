@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		086D676228884F85003C0F4E /* Transitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D676128884F85003C0F4E /* Transitioner.swift */; };
 		086D67642889930B003C0F4E /* UserListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D67632889930B003C0F4E /* UserListRouter.swift */; };
+		086D6766288BF41D003C0F4E /* UserDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D6765288BF41D003C0F4E /* UserDetailRouter.swift */; };
+		086D676A288BF587003C0F4E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D6769288BF587003C0F4E /* Router.swift */; };
 		192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192373C828117373004BF245 /* UserListTableViewCell.swift */; };
 		192373CB28117373004BF245 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 192373C928117373004BF245 /* UserListTableViewCell.xib */; };
 		192373CE28117855004BF245 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 192373CD28117855004BF245 /* Kingfisher */; };
@@ -85,6 +87,8 @@
 /* Begin PBXFileReference section */
 		086D676128884F85003C0F4E /* Transitioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitioner.swift; sourceTree = "<group>"; };
 		086D67632889930B003C0F4E /* UserListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRouter.swift; sourceTree = "<group>"; };
+		086D6765288BF41D003C0F4E /* UserDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailRouter.swift; sourceTree = "<group>"; };
+		086D6769288BF587003C0F4E /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		192373C828117373004BF245 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		192373C928117373004BF245 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		192635D32814646300129705 /* UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.swift; sourceTree = "<group>"; };
@@ -178,6 +182,24 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		086D6767288BF556003C0F4E /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				086D6768288BF571003C0F4E /* Core */,
+				086D67632889930B003C0F4E /* UserListRouter.swift */,
+				086D6765288BF41D003C0F4E /* UserDetailRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		086D6768288BF571003C0F4E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				086D6769288BF587003C0F4E /* Router.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		194A5617280DBA2D003E8EBB = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +229,7 @@
 				194A5655280DC12C003E8EBB /* Flux */,
 				194A565D280DC2CD003E8EBB /* ViewModels */,
 				194A5657280DC195003E8EBB /* Models */,
+				086D6767288BF556003C0F4E /* Router */,
 				194A5656280DC152003E8EBB /* Views */,
 				194A5676280F06E3003E8EBB /* DI */,
 				194A5623280DBA2D003E8EBB /* AppDelegate.swift */,
@@ -307,7 +330,6 @@
 		194A567B280F131D003E8EBB /* UserList */ = {
 			isa = PBXGroup;
 			children = (
-				086D67632889930B003C0F4E /* UserListRouter.swift */,
 				194A567C280F1346003E8EBB /* UserList.storyboard */,
 				194A567E280F1464003E8EBB /* UserListViewController.swift */,
 				192373C828117373004BF245 /* UserListTableViewCell.swift */,
@@ -548,6 +570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				086D676A288BF587003C0F4E /* Router.swift in Sources */,
 				1991207A2815999C004B3AA5 /* FetchReposListRequest.swift in Sources */,
 				192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */,
 				194A569228114D15003E8EBB /* UserListAction.swift in Sources */,
@@ -576,6 +599,7 @@
 				1991207F2815A9F7004B3AA5 /* UserReposTableViewCell.swift in Sources */,
 				194A5686281079FA003E8EBB /* UserListViewModel.swift in Sources */,
 				192635D42814646300129705 /* UserDetail.swift in Sources */,
+				086D6766288BF41D003C0F4E /* UserDetailRouter.swift in Sources */,
 				1975F37028154874007C96F4 /* UserDetailState.swift in Sources */,
 				1975F3672815462B007C96F4 /* UserDetailTableViewCell.swift in Sources */,
 				194A5666280DCE6D003E8EBB /* Dispatcher.swift in Sources */,

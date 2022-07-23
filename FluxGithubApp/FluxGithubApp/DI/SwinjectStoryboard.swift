@@ -85,8 +85,10 @@ extension SwinjectStoryboard {
         }
         
         defaultContainer.storyboardInitCompleted(UserDetailViewController.self) { r, c in
-            c.viewModelInput = r.resolve(UserDetailViewModel.self)
-            c.viewModelOutput = r.resolve(UserDetailViewModel.self)
+            let viewModel = r.resolve(UserDetailViewModel.self)
+            viewModel?.injectRouter(UserDetailRouterImpl(view: c))
+            c.viewModelInput = viewModel
+            c.viewModelOutput = viewModel
         }
     }
 }

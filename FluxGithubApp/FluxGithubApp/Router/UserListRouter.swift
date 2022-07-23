@@ -9,14 +9,7 @@ protocol UserListRouter {
     func transitionToUserDetail(username: String)
 }
 
-final class UserListRouterImpl: UserListRouter {
-    
-    private weak var view: Transitioner!
-    
-    init(view: Transitioner) {
-        self.view = view
-    }
-    
+final class UserListRouterImpl: Router, UserListRouter {
     func transitionToUserDetail(username: String) {
         let viewController = UserDetailViewController.instantiate()
         viewController.username = username
