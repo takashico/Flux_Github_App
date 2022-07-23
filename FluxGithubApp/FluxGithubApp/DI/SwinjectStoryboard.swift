@@ -34,7 +34,7 @@ extension SwinjectStoryboard {
         
         // Store
         defaultContainer.register(UserListStore.self) { r in
-            UserListStore(r.resolve(Dispatcher.self)!)
+            UserListStoreImpl(r.resolve(Dispatcher.self)!)
         }
         .inObjectScope(.container)
         
@@ -45,7 +45,7 @@ extension SwinjectStoryboard {
         
         // ActionCreator
         defaultContainer.register(UserListActionCreator.self) { r in
-            UserListActionCreator(
+            UserListActionCreatorImpl(
                 r.resolve(Dispatcher.self)!,
                 userRepository: r.resolve(UserRepository.self)!
             )
