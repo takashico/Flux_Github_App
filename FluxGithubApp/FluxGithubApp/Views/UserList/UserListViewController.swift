@@ -15,7 +15,7 @@ class UserListViewController: UIViewController {
         case userList
     }
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     var viewModelInput: UserListViewModelInput?
     var viewModelOutput: UserListViewModelOutput?
@@ -45,17 +45,8 @@ class UserListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "User List"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
-        
-        // セル登録
-        tableView.register(UINib.init(nibName: UserListTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserListTableViewCell.className)
-        
-        // tableViewの設定
-        tableView.dataSource = dataSource
-        tableView.estimatedRowHeight = 80
-        tableView.rowHeight = UITableView.automaticDimension
+        setUpNavigationController()
+        setUpTableView()
         
         viewModelInput?.fetchUserList()
         
@@ -70,17 +61,32 @@ class UserListViewController: UIViewController {
         indicatorView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
     }
     
+    private func setUpNavigationController() {
+        title = "User List"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+    }
+    
+    private func setUpTableView() {
+        // セル登録
+        tableView.register(
+            UINib.init(nibName: UserListTableViewCell.className, bundle: nil),
+            forCellReuseIdentifier: UserListTableViewCell.className
+        )
+        
+        // tableViewの設定
+        tableView.dataSource = dataSource
+        tableView.estimatedRowHeight = 80
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
     private func setTableViewSubscribes() {
         // タップアクション
         tableView.rx.itemSelected
             .asSignal()
             .emit(with: self, onNext: { owner, indexPath in
                 owner.tableView.deselectRow(at: indexPath, animated: true)
-                
-                let user = owner.userList[indexPath.row]
-                let viewController = UserDetailViewController.instantiate()
-                viewController.username = user.name
-                owner.navigationController?.pushViewController(viewController, animated: true)
+                owner.viewModelInput?.didSelectRow(at: indexPath)
             })
             .disposed(by: disposeBag)
         
