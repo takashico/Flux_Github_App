@@ -70,7 +70,7 @@ class UserListViewController: UIViewController {
     private func setUpTableView() {
         // セル登録
         tableView.register(
-            UINib.init(nibName: UserListTableViewCell.className, bundle: nil),
+            UINib(nibName: UserListTableViewCell.className, bundle: nil),
             forCellReuseIdentifier: UserListTableViewCell.className
         )
         

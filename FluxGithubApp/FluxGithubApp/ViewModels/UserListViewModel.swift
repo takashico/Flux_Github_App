@@ -23,8 +23,7 @@ protocol UserListViewModelOutput {
     var apiError: Observable<Error?> { get }
 }
 
-class UserListViewModel: UserListViewModelOutput {
-    
+final class UserListViewModel: UserListViewModelOutput {
     private let PER_PAGE = 20
     
     private let actionCreator: UserListActionCreator

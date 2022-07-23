@@ -45,19 +45,29 @@ class UserDetailViewController: UIViewController {
         
         title = username
         
-        // セル登録
-        tableView.register(UINib.init(nibName: UserDetailTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserDetailTableViewCell.className)
-        tableView.register(UINib.init(nibName: UserReposTableViewCell.className, bundle: nil), forCellReuseIdentifier: UserReposTableViewCell.className)
-        
-        // tableViewの設定
-        tableView.estimatedRowHeight = 80
-        tableView.rowHeight = UITableView.automaticDimension
+        setUpTableView()
         
         viewModelInput?.fetchUserDetail(username: username)
         viewModelInput?.fetchReposList(username: username)
         
         setTableViewSubscribes()
         setViewModelSubscribes()
+    }
+    
+    private func setUpTableView() {
+        // セル登録
+        tableView.register(
+            UINib(nibName: UserDetailTableViewCell.className, bundle: nil),
+            forCellReuseIdentifier: UserDetailTableViewCell.className
+        )
+        tableView.register(
+            UINib(nibName: UserReposTableViewCell.className, bundle: nil),
+            forCellReuseIdentifier: UserReposTableViewCell.className
+        )
+        
+        // tableViewの設定
+        tableView.estimatedRowHeight = 80
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     private func setTableViewSubscribes() {
