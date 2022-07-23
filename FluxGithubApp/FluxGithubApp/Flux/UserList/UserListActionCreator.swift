@@ -7,7 +7,12 @@
 
 import RxSwift
 
-final class UserListActionCreator: ActionCreator {
+protocol UserListActionCreator {
+    func firstFetchUserList(perPage: Int)
+    func moreFetchUserList(since: Int, perPage: Int)
+}
+
+final class UserListActionCreatorImpl: ActionCreator, UserListActionCreator {
     private var userRepository: UserRepository
     
     required init(_ dispatcher: Dispatcher, userRepository: UserRepository) {

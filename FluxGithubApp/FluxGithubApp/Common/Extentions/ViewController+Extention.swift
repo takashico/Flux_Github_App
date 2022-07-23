@@ -19,3 +19,5 @@ extension StoryBoardHelperProtocol where Self: UIViewController {
 }
 
 extension UIViewController: StoryBoardHelperProtocol {}
+
+extension UIViewController: Transitioner {}

@@ -34,18 +34,18 @@ extension SwinjectStoryboard {
         
         // Store
         defaultContainer.register(UserListStore.self) { r in
-            UserListStore(r.resolve(Dispatcher.self)!)
+            UserListStoreImpl(r.resolve(Dispatcher.self)!)
         }
         .inObjectScope(.container)
         
         defaultContainer.register(UserDetailStore.self) { r in
-            UserDetailStore(r.resolve(Dispatcher.self)!)
+            UserDetailStoreImpl(r.resolve(Dispatcher.self)!)
         }
         .inObjectScope(.container)
         
         // ActionCreator
         defaultContainer.register(UserListActionCreator.self) { r in
-            UserListActionCreator(
+            UserListActionCreatorImpl(
                 r.resolve(Dispatcher.self)!,
                 userRepository: r.resolve(UserRepository.self)!
             )
@@ -53,7 +53,7 @@ extension SwinjectStoryboard {
         .inObjectScope(.container)
         
         defaultContainer.register(UserDetailActionCreator.self) { r in
-            UserDetailActionCreator(
+            UserDetailActionCreatorImpl(
                 r.resolve(Dispatcher.self)!,
                 userRepository: r.resolve(UserRepository.self)!,
                 reposRepository: r.resolve(ReposRepository.self)!
@@ -78,13 +78,17 @@ extension SwinjectStoryboard {
         
         // ViewController
         defaultContainer.storyboardInitCompleted(UserListViewController.self) { r, c in
-            c.viewModelInput = r.resolve(UserListViewModel.self)
-            c.viewModelOutput = r.resolve(UserListViewModel.self)
+            let viewModel = r.resolve(UserListViewModel.self)
+            viewModel?.injectRouter(UserListRouterImpl(view: c))
+            c.viewModelInput = viewModel
+            c.viewModelOutput = viewModel
         }
         
         defaultContainer.storyboardInitCompleted(UserDetailViewController.self) { r, c in
-            c.viewModelInput = r.resolve(UserDetailViewModel.self)
-            c.viewModelOutput = r.resolve(UserDetailViewModel.self)
+            let viewModel = r.resolve(UserDetailViewModel.self)
+            viewModel?.injectRouter(UserDetailRouterImpl(view: c))
+            c.viewModelInput = viewModel
+            c.viewModelOutput = viewModel
         }
     }
 }

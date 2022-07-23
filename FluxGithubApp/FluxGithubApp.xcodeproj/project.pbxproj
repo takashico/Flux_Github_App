@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		086D676228884F85003C0F4E /* Transitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D676128884F85003C0F4E /* Transitioner.swift */; };
+		086D67642889930B003C0F4E /* UserListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D67632889930B003C0F4E /* UserListRouter.swift */; };
+		086D6766288BF41D003C0F4E /* UserDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D6765288BF41D003C0F4E /* UserDetailRouter.swift */; };
+		086D676A288BF587003C0F4E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D6769288BF587003C0F4E /* Router.swift */; };
 		192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192373C828117373004BF245 /* UserListTableViewCell.swift */; };
 		192373CB28117373004BF245 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 192373C928117373004BF245 /* UserListTableViewCell.xib */; };
 		192373CE28117855004BF245 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 192373CD28117855004BF245 /* Kingfisher */; };
@@ -81,6 +85,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		086D676128884F85003C0F4E /* Transitioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitioner.swift; sourceTree = "<group>"; };
+		086D67632889930B003C0F4E /* UserListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRouter.swift; sourceTree = "<group>"; };
+		086D6765288BF41D003C0F4E /* UserDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailRouter.swift; sourceTree = "<group>"; };
+		086D6769288BF587003C0F4E /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		192373C828117373004BF245 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		192373C928117373004BF245 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		192635D32814646300129705 /* UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.swift; sourceTree = "<group>"; };
@@ -166,6 +174,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		086D676028884F52003C0F4E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				086D676128884F85003C0F4E /* Transitioner.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		086D6767288BF556003C0F4E /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				086D6768288BF571003C0F4E /* Core */,
+				086D67632889930B003C0F4E /* UserListRouter.swift */,
+				086D6765288BF41D003C0F4E /* UserDetailRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		086D6768288BF571003C0F4E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				086D6769288BF587003C0F4E /* Router.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		194A5617280DBA2D003E8EBB = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +229,7 @@
 				194A5655280DC12C003E8EBB /* Flux */,
 				194A565D280DC2CD003E8EBB /* ViewModels */,
 				194A5657280DC195003E8EBB /* Models */,
+				086D6767288BF556003C0F4E /* Router */,
 				194A5656280DC152003E8EBB /* Views */,
 				194A5676280F06E3003E8EBB /* DI */,
 				194A5623280DBA2D003E8EBB /* AppDelegate.swift */,
@@ -361,6 +396,7 @@
 		1975F35F2815436A007C96F4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				086D676028884F52003C0F4E /* Protocols */,
 				1975F36028154370007C96F4 /* Extentions */,
 			);
 			path = Common;
@@ -534,6 +570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				086D676A288BF587003C0F4E /* Router.swift in Sources */,
 				1991207A2815999C004B3AA5 /* FetchReposListRequest.swift in Sources */,
 				192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */,
 				194A569228114D15003E8EBB /* UserListAction.swift in Sources */,
@@ -543,6 +580,7 @@
 				1975F35628147519007C96F4 /* FetchUserListRequest.swift in Sources */,
 				199120832815E2BB004B3AA5 /* RepositoryDetailViewController.swift in Sources */,
 				194A567F280F1464003E8EBB /* UserListViewController.swift in Sources */,
+				086D67642889930B003C0F4E /* UserListRouter.swift in Sources */,
 				194A5668280DCEF9003E8EBB /* Action.swift in Sources */,
 				1975F3622815438B007C96F4 /* ViewController+Extention.swift in Sources */,
 				1975F35828147596007C96F4 /* FetchUserDetailRequest.swift in Sources */,
@@ -557,9 +595,11 @@
 				194A568B2811487C003E8EBB /* User.swift in Sources */,
 				1991207C281599BD004B3AA5 /* Repos.swift in Sources */,
 				194A568928107B19003E8EBB /* UserListActionCreator.swift in Sources */,
+				086D676228884F85003C0F4E /* Transitioner.swift in Sources */,
 				1991207F2815A9F7004B3AA5 /* UserReposTableViewCell.swift in Sources */,
 				194A5686281079FA003E8EBB /* UserListViewModel.swift in Sources */,
 				192635D42814646300129705 /* UserDetail.swift in Sources */,
+				086D6766288BF41D003C0F4E /* UserDetailRouter.swift in Sources */,
 				1975F37028154874007C96F4 /* UserDetailState.swift in Sources */,
 				1975F3672815462B007C96F4 /* UserDetailTableViewCell.swift in Sources */,
 				194A5666280DCE6D003E8EBB /* Dispatcher.swift in Sources */,
