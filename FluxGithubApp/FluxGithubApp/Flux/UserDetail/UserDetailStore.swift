@@ -8,7 +8,12 @@
 import RxSwift
 import RxRelay
 
-final class UserDetailStore: Store {
+protocol UserDetailStore {
+    var state: UserDetailState { get }
+    var stateObservable: Observable<UserDetailState> { get }
+}
+
+final class UserDetailStoreImpl: Store, UserDetailStore {
     
     private let _state = BehaviorRelay<UserDetailState>(
         value: UserDetailState(
@@ -42,7 +47,7 @@ final class UserDetailStore: Store {
     }
 }
 
-extension UserDetailStore {
+extension UserDetailStoreImpl {
     private func onAction(action: UserDetailAction) {
         switch action {
         case .userDetailFetched(let user):

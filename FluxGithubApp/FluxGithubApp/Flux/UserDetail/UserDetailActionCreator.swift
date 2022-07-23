@@ -7,7 +7,13 @@
 
 import RxSwift
 
-final class UserDetailActionCreator: ActionCreator {
+protocol UserDetailActionCreator {
+    func fetchUserDetail(username: String)
+    func firstFetchUserRepositories(username: String, perPage: Int)
+    func moreFetchUserRepositories(username: String, page: Int, perPage: Int)
+}
+
+final class UserDetailActionCreatorImpl: ActionCreator, UserDetailActionCreator {
     private var userRepository: UserRepository
     private var reposRepository: ReposRepository
     
