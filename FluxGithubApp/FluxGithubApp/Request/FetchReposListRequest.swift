@@ -9,7 +9,7 @@ import Foundation
 
 struct FetchReposListRequest: ApiRequestProtocol {
     typealias Response = [Repos]
-    
+
     init(username: String, page: Int, perPage: Int) {
         path = "users/\(username)/repos"
         queryItems = [
@@ -17,7 +17,7 @@ struct FetchReposListRequest: ApiRequestProtocol {
             URLQueryItem(name: "per_page", value: "\(perPage)")
         ]
     }
-    
+
     var path: String
     var queryItems: [URLQueryItem]?
 }

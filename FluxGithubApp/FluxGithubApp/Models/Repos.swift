@@ -21,7 +21,7 @@ struct Repos: Decodable, Equatable, Hashable {
     static func == (lhs: Repos, rhs: Repos) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case id
         case name

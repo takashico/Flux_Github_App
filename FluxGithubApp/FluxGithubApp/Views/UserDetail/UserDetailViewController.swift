@@ -5,24 +5,24 @@
 //  Created by Takahashi Shiko on 2022/04/24.
 //
 
-import UIKit
-import RxSwift
 import PKHUD
+import RxSwift
+import UIKit
 
 class UserDetailViewController: UIViewController {
-    
+
     private enum SectionType: Int, CaseIterable {
         case userDetail = 0
         case reposList = 1
     }
-    
+
     @IBOutlet weak var tableView: UITableView!
-    
+
     // usernameは必須
     var username: String!
     var viewModelInput: UserDetailViewModelInput?
     var viewModelOutput: UserDetailViewModelOutput?
-    
+
     private let disposeBag = DisposeBag()
     private let indicatorView = UIActivityIndicatorView(style: .medium)
     // ユーザー詳細
@@ -37,23 +37,23 @@ class UserDetailViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    
+
     private var canReposListFetchMore = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = username
-        
+
         setUpTableView()
-        
+
         viewModelInput?.fetchUserDetail(username: username)
         viewModelInput?.fetchReposList(username: username)
-        
+
         setTableViewSubscribes()
         setViewModelSubscribes()
     }
-    
+
     private func setUpTableView() {
         // セル登録
         tableView.register(
@@ -64,12 +64,12 @@ class UserDetailViewController: UIViewController {
             UINib(nibName: UserReposTableViewCell.className, bundle: nil),
             forCellReuseIdentifier: UserReposTableViewCell.className
         )
-        
+
         // tableViewの設定
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
     }
-    
+
     private func setTableViewSubscribes() {
         // タップアクション
         tableView.rx.itemSelected
@@ -78,13 +78,13 @@ class UserDetailViewController: UIViewController {
                 if SectionType(rawValue: indexPath.section) != .reposList {
                     return
                 }
-                
+
                 owner.tableView.deselectRow(at: indexPath, animated: true)
-                
+
                 guard let url = URL(string: owner.reposList[indexPath.row].htmlUrl) else {
                     return
                 }
-                
+
                 let viewController = RepositoryDetailViewController()
                 viewController.url = url
                 owner.navigationController?.pushViewController(viewController, animated: true)
@@ -94,11 +94,11 @@ class UserDetailViewController: UIViewController {
         // 最下部の読み込み処理
         tableView.rx.willDisplayCell
             .asDriver()
-            .drive(onNext: { [weak self] cell, indexPath in
+            .drive(onNext: { [weak self] _, indexPath in
                 if SectionType(rawValue: indexPath.section) != .reposList {
                     return
                 }
-                
+
                 guard let strongSelf = self else { return }
 
                 if strongSelf.canReposListFetchMore, indexPath.row >= (strongSelf.reposList.count - 2) {
@@ -107,7 +107,7 @@ class UserDetailViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-    
+
     private func setViewModelSubscribes() {
         // ユーザー一覧
         viewModelOutput?.user
@@ -117,7 +117,7 @@ class UserDetailViewController: UIViewController {
                 owner.user = user
             })
             .disposed(by: disposeBag)
-        
+
         // リポジトリ一覧
         viewModelOutput?.reposList
             .distinctUntilChanged()
@@ -126,7 +126,7 @@ class UserDetailViewController: UIViewController {
                 owner.reposList = reposList
             })
             .disposed(by: disposeBag)
-        
+
         // 追加取得可能フラグ
         viewModelOutput?.canReposListFetchMore
             .distinctUntilChanged()
@@ -134,7 +134,7 @@ class UserDetailViewController: UIViewController {
                 owner.canReposListFetchMore = canReposListFetchMore
             })
             .disposed(by: disposeBag)
-        
+
         // 全てのデータ取得完了フラグ
         viewModelOutput?.isReposListDataEnded
             .distinctUntilChanged()
@@ -147,7 +147,7 @@ class UserDetailViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
+
         // ローディング
         viewModelOutput?.isLoading
             .distinctUntilChanged()
@@ -160,7 +160,7 @@ class UserDetailViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
+
         // リポジトリリストのローディング
         viewModelOutput?.isReposListLoading
             .distinctUntilChanged()
@@ -173,7 +173,7 @@ class UserDetailViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
+
         // APIエラー
         viewModelOutput?.apiError
             .asDriver(onErrorJustReturn: nil)
@@ -189,7 +189,7 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return SectionType.allCases.count
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch SectionType(rawValue: section) {
         case .userDetail:
@@ -200,7 +200,7 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
             return 0
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let sectionType = SectionType(rawValue: indexPath.section) else {
             return UITableViewCell()
@@ -218,7 +218,7 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

@@ -5,8 +5,8 @@
 //  Created by Takahashi Shiko on 2022/04/24.
 //
 
-import RxSwift
 import Foundation
+import RxSwift
 
 protocol UserDetailViewModelInput {
     func fetchUserDetail(username: String)
@@ -27,11 +27,11 @@ protocol UserDetailViewModelOutput {
 
 final class UserDetailViewModel: UserDetailViewModelOutput {
     private let PER_PAGE = 20
-    
+
     private let actionCreator: UserDetailActionCreator
     private let store: UserDetailStore
     private var router: UserDetailRouter?
-    
+
     var user: Observable<UserDetail?>
     var reposList: Observable<[Repos]>
     var isLoading: Observable<Bool>
@@ -39,47 +39,47 @@ final class UserDetailViewModel: UserDetailViewModelOutput {
     var isReposListDataEnded: Observable<Bool>
     var canReposListFetchMore: Observable<Bool>
     var apiError: Observable<Error?>
-    
+
     init(actionCreator: UserDetailActionCreator, store: UserDetailStore) {
         self.actionCreator = actionCreator
         self.store = store
-        
+
         self.user = store.stateObservable.map { state in
             state.user
         }
         .share()
-        
+
         self.reposList = store.stateObservable.map { state in
             state.reposList
         }
         .share()
-        
+
         self.isLoading = store.stateObservable.map { state in
             state.isLoading
         }
         .share()
-        
+
         self.isReposListLoading = store.stateObservable.map { state in
             state.isReposListLoading
         }
         .share()
-        
+
         self.isReposListDataEnded = store.stateObservable.map { state in
             state.isReposListDataEnded
         }
         .share()
-        
+
         self.canReposListFetchMore = store.stateObservable.map { state in
             state.canReposListFetchMore
         }
         .share()
-        
+
         self.apiError = store.stateObservable.map { state in
             state.apiError
         }
         .share()
     }
-    
+
     func injectRouter(_ router: UserDetailRouter) {
         self.router = router
     }
@@ -89,11 +89,11 @@ extension UserDetailViewModel: UserDetailViewModelInput {
     func fetchUserDetail(username: String) {
         actionCreator.fetchUserDetail(username: username)
     }
-    
+
     func fetchReposList(username: String) {
         actionCreator.firstFetchUserRepositories(username: username, perPage: PER_PAGE)
     }
-    
+
     func fetchMoreReposList(username: String) {
         actionCreator.moreFetchUserRepositories(
             username: username,
@@ -101,12 +101,12 @@ extension UserDetailViewModel: UserDetailViewModelInput {
             perPage: PER_PAGE
         )
     }
-    
+
     func didSelectRepositoryRow(at indexPath: IndexPath) {
         guard let url = URL(string: store.state.reposList[indexPath.row].htmlUrl) else {
             return
         }
-        
+
         router?.transitionToRepositoryDetail(url: url)
     }
 }

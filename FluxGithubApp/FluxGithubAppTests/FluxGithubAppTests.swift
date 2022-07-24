@@ -5,8 +5,8 @@
 //  Created by Takahashi Shiko on 2022/04/19.
 //
 
-import XCTest
 @testable import FluxGithubApp
+import XCTest
 
 class FluxGithubAppTests: XCTestCase {
 

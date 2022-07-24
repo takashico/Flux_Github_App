@@ -5,8 +5,8 @@
 //  Created by Takahashi Shiko on 2022/04/21.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 
 protocol UserListStore {
     var state: UserListState { get }
@@ -14,7 +14,7 @@ protocol UserListStore {
 }
 
 final class UserListStoreImpl: Store, UserListStore {
-    
+
     private let _state = BehaviorRelay<UserListState>(
         value: UserListState(
             users: [],
@@ -26,15 +26,15 @@ final class UserListStoreImpl: Store, UserListStore {
             apiError: nil
         )
     )
-    
+
     var state: UserListState {
         return _state.value
     }
-    
+
     var stateObservable: Observable<UserListState> {
         return _state.asObservable()
     }
-    
+
     override func onAction(action: Action) {
         switch action {
         case let action as UserListAction:
@@ -62,7 +62,7 @@ extension UserListStoreImpl {
                 ),
                 apiError: nil
             ))
-            
+
         case .moreFetched(let isDataEnded, let users):
             _state.accept(UserListState(
                 users: state.users + users,
@@ -77,7 +77,7 @@ extension UserListStoreImpl {
                 ),
                 apiError: nil
             ))
-            
+
         case .apiError(let error):
             _state.accept(UserListState(
                 users: state.users,
@@ -88,7 +88,7 @@ extension UserListStoreImpl {
                 canFetchMore: false,
                 apiError: error
             ))
-            
+
         case .firstFetchStart:
             _state.accept(UserListState(
                 users: state.users,
@@ -99,8 +99,7 @@ extension UserListStoreImpl {
                 canFetchMore: false,
                 apiError: nil
             ))
-            
-            
+
         case .firstFetchEnd:
             _state.accept(UserListState(
                 users: state.users,
@@ -111,7 +110,7 @@ extension UserListStoreImpl {
                 canFetchMore: state.canFetchMore,
                 apiError: nil
             ))
-            
+
         case .moreFetchStart:
             _state.accept(UserListState(
                 users: state.users,
@@ -122,7 +121,7 @@ extension UserListStoreImpl {
                 canFetchMore: false,
                 apiError: nil
             ))
-            
+
         case .moreFetchEnd:
             _state.accept(UserListState(
                 users: state.users,
@@ -135,7 +134,7 @@ extension UserListStoreImpl {
             ))
         }
     }
-    
+
     private func canFetchMore(isMoreLoading: Bool, isFirstFetched: Bool, isDataEnded: Bool) -> Bool {
         return !isMoreLoading && !isDataEnded && isFirstFetched
     }
