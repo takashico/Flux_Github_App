@@ -1,0 +1,29 @@
+# デフォルト有効のルールのうち、無効にするもの
+disabled_rules:
+# コードの記載のない改行を許可するため
+- trailing_whitespace
+# force_castは場合によっては使用するため
+- force_cast
+
+- identifier_name
+
+# デフォルト無効のルールのうち、有効にするもの
+opt_in_rules:
+- closure_end_indentation
+- closure_spacing
+- collection_alignment
+- empty_count
+- explicit_init
+- operator_usage_whitespace
+- private_outlet
+- redundant_nil_coalescing
+- sorted_imports
+
+# 追加したOSSライブラリは対象に含めない
+excluded:
+- Pods/
+
+line_length: 120
+function_body_length:
+  warning: 100
+  error: 200
