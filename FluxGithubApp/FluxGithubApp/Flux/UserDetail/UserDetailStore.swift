@@ -5,8 +5,8 @@
 //  Created by Takahashi Shiko on 2022/04/24.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 
 protocol UserDetailStore {
     var state: UserDetailState { get }
@@ -14,7 +14,7 @@ protocol UserDetailStore {
 }
 
 final class UserDetailStoreImpl: Store, UserDetailStore {
-    
+
     private let _state = BehaviorRelay<UserDetailState>(
         value: UserDetailState(
             user: nil,
@@ -28,15 +28,15 @@ final class UserDetailStoreImpl: Store, UserDetailStore {
             apiError: nil
         )
     )
-    
+
     var state: UserDetailState {
         return _state.value
     }
-    
+
     var stateObservable: Observable<UserDetailState> {
         return _state.asObservable()
     }
-    
+
     override func onAction(action: Action) {
         switch action {
         case let action as UserDetailAction:
@@ -62,7 +62,7 @@ extension UserDetailStoreImpl {
                 canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
-            
+
         case .reposListFirstFetched(let reposList, let isDataEnded):
             _state.accept(UserDetailState(
                 user: state.user,
@@ -79,7 +79,7 @@ extension UserDetailStoreImpl {
                 ),
                 apiError: nil
             ))
-            
+
         case .reposListMoreFetched(let page, let reposList, let isDataEnded):
             _state.accept(UserDetailState(
                 user: state.user,
@@ -96,7 +96,7 @@ extension UserDetailStoreImpl {
                 ),
                 apiError: nil
             ))
-            
+
         case .apiError(let error):
             _state.accept(UserDetailState(
                 user: state.user,
@@ -109,7 +109,7 @@ extension UserDetailStoreImpl {
                 canReposListFetchMore: state.canReposListFetchMore,
                 apiError: error
             ))
-            
+
         case .userDetailFetchStart:
             _state.accept(UserDetailState(
                 user: nil,
@@ -122,7 +122,7 @@ extension UserDetailStoreImpl {
                 canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
-            
+
         case .userDetailFetchEnd:
             _state.accept(UserDetailState(
                 user: state.user,
@@ -135,7 +135,7 @@ extension UserDetailStoreImpl {
                 canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
-            
+
         case .reposListFirstFetchStart:
             _state.accept(UserDetailState(
                 user: state.user,
@@ -148,7 +148,7 @@ extension UserDetailStoreImpl {
                 canReposListFetchMore: false,
                 apiError: nil
             ))
-            
+
         case .reposListFirstFetchEnd:
             _state.accept(UserDetailState(
                 user: state.user,
@@ -161,7 +161,7 @@ extension UserDetailStoreImpl {
                 canReposListFetchMore: state.canReposListFetchMore,
                 apiError: nil
             ))
-            
+
         case .reposListMoreFetchStart:
             _state.accept(UserDetailState(
                 user: state.user,
@@ -174,7 +174,7 @@ extension UserDetailStoreImpl {
                 canReposListFetchMore: false,
                 apiError: nil
             ))
-            
+
         case .reposListMoreFetchEnd:
             _state.accept(UserDetailState(
                 user: state.user,
@@ -193,7 +193,7 @@ extension UserDetailStoreImpl {
     private func filteredReposList(reposList: [Repos]) -> [Repos] {
         return reposList.filter { !$0.isFork }
     }
-    
+
     private func canReposListFetchMore(isLoading: Bool, isDataEnded: Bool, isFirstFetched: Bool) -> Bool {
         return !isLoading && !isDataEnded && isFirstFetched
     }

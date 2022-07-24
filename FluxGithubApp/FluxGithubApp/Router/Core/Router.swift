@@ -7,7 +7,7 @@
 
 class Router {
     private(set) weak var view: Transitioner!
-    
+
     init(view: Transitioner) {
         self.view = view
     }

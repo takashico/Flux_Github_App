@@ -12,9 +12,9 @@ class RepositoryDetailViewController: UIViewController, WKUIDelegate, WKNavigati
 
     // urlは必須
     var url: URL!
-    
+
     private var webView: WKWebView!
-    
+
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
@@ -22,10 +22,10 @@ class RepositoryDetailViewController: UIViewController, WKUIDelegate, WKNavigati
         webView.navigationDelegate = self
         view = webView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         webView.load(URLRequest(url: url))
     }
 }

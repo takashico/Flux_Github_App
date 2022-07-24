@@ -9,7 +9,7 @@ import Foundation
 
 protocol ApiRequestProtocol {
     associatedtype Response: Decodable
-    
+
     var path: String { get }
     var queryItems: [URLQueryItem]? { get }
 }

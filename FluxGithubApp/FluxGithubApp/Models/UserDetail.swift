@@ -20,7 +20,7 @@ struct UserDetail: Decodable, Equatable, Hashable {
     static func == (lhs: UserDetail, rhs: UserDetail) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case id
         case name = "login"

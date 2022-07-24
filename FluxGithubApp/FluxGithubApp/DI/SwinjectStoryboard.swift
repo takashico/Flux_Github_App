@@ -14,35 +14,35 @@ extension SwinjectStoryboard {
             ApiClient.shared
         }
         .inObjectScope(.container)
-        
+
         // Repositories
         defaultContainer.register(UserRepository.self) { r in
             UserRepositoryImpl(apiClient: r.resolve(ApiClient.self)!)
         }
         .inObjectScope(.container)
-        
+
         defaultContainer.register(ReposRepository.self) { r in
             ReposRepositoryImpl(apiClient: r.resolve(ApiClient.self)!)
         }
         .inObjectScope(.container)
-        
+
         // Dispatch
         defaultContainer.register(Dispatcher.self) { _ in
             Dispatcher.shared
         }
         .inObjectScope(.container)
-        
+
         // Store
         defaultContainer.register(UserListStore.self) { r in
             UserListStoreImpl(r.resolve(Dispatcher.self)!)
         }
         .inObjectScope(.container)
-        
+
         defaultContainer.register(UserDetailStore.self) { r in
             UserDetailStoreImpl(r.resolve(Dispatcher.self)!)
         }
         .inObjectScope(.container)
-        
+
         // ActionCreator
         defaultContainer.register(UserListActionCreator.self) { r in
             UserListActionCreatorImpl(
@@ -51,7 +51,7 @@ extension SwinjectStoryboard {
             )
         }
         .inObjectScope(.container)
-        
+
         defaultContainer.register(UserDetailActionCreator.self) { r in
             UserDetailActionCreatorImpl(
                 r.resolve(Dispatcher.self)!,
@@ -60,7 +60,7 @@ extension SwinjectStoryboard {
             )
         }
         .inObjectScope(.container)
-        
+
         // ViewModel
         defaultContainer.register(UserListViewModel.self) { r in
             UserListViewModel(
@@ -68,14 +68,14 @@ extension SwinjectStoryboard {
                 store: r.resolve(UserListStore.self)!
             )
         }
-        
+
         defaultContainer.register(UserDetailViewModel.self) { r in
             UserDetailViewModel(
                 actionCreator: r.resolve(UserDetailActionCreator.self)!,
                 store: r.resolve(UserDetailStore.self)!
             )
         }
-        
+
         // ViewController
         defaultContainer.storyboardInitCompleted(UserListViewController.self) { r, c in
             let viewModel = r.resolve(UserListViewModel.self)
@@ -83,7 +83,7 @@ extension SwinjectStoryboard {
             c.viewModelInput = viewModel
             c.viewModelOutput = viewModel
         }
-        
+
         defaultContainer.storyboardInitCompleted(UserDetailViewController.self) { r, c in
             let viewModel = r.resolve(UserDetailViewModel.self)
             viewModel?.injectRouter(UserDetailRouterImpl(view: c))

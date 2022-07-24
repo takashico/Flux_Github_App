@@ -25,7 +25,7 @@ extension Transitioner {
         }
         nc.pushViewController(viewController, animated: animated)
     }
-    
+
     func popViewController(animated: Bool) {
         guard let nc = navigationController else {
             assertionFailure("UINavigationControllerが見つからないため無効")
@@ -33,7 +33,7 @@ extension Transitioner {
         }
         nc.popViewController(animated: animated)
     }
-    
+
     func popToRootViewController(animated: Bool) {
         guard let nc = navigationController else {
             assertionFailure("UINavigationControllerが見つからないため無効")
@@ -41,7 +41,7 @@ extension Transitioner {
         }
         nc.popToRootViewController(animated: animated)
     }
-    
+
     func popToViewController(_ viewController: UIViewController, animated: Bool) {
         guard let nc = navigationController else {
             assertionFailure("UINavigationControllerが見つからないため無効")
@@ -49,11 +49,11 @@ extension Transitioner {
         }
         nc.popToViewController(viewController, animated: animated)
     }
-    
+
     func present(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
         present(viewController, animated: animated, completion: completion)
     }
-    
+
     func dismiss(animated: Bool) {
         dismiss(animated: animated)
     }

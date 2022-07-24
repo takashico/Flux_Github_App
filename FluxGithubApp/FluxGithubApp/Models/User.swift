@@ -17,7 +17,7 @@ struct User: Decodable, Equatable, Hashable {
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case id
         case name = "login"
