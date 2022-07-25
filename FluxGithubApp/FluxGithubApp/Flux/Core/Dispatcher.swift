@@ -14,7 +14,7 @@ final class Dispatcher {
     private let _action = PublishRelay<Action>()
 
     func register(callback: @escaping (Action) -> Void) -> Disposable {
-        return _action.subscribe(onNext: callback)
+        _action.subscribe(onNext: callback)
     }
 
     func dispatch(_ action: Action) {

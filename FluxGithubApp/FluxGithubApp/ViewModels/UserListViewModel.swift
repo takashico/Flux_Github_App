@@ -44,32 +44,32 @@ final class UserListViewModel: UserListViewModelOutput {
         self.actionCreator = actionCreator
         self.store = store
 
-        self.users = store.stateObservable.map { state in
+        users = store.stateObservable.map { state in
             state.users
         }
         .share()
 
-        self.canFetchMore = store.stateObservable.map { state in
+        canFetchMore = store.stateObservable.map { state in
             state.canFetchMore
         }
         .share()
 
-        self.isDataEnded = store.stateObservable.map { state in
+        isDataEnded = store.stateObservable.map { state in
             state.isDataEnded
         }
         .share()
 
-        self.isLoading = store.stateObservable.map { state in
+        isLoading = store.stateObservable.map { state in
             state.isLoading
         }
         .share()
 
-        self.isMoreLoading = store.stateObservable.map { state in
+        isMoreLoading = store.stateObservable.map { state in
             state.isMoreLoading
         }
         .share()
 
-        self.apiError = store.stateObservable.map { state in
+        apiError = store.stateObservable.map { state in
             state.apiError
         }
         .share()

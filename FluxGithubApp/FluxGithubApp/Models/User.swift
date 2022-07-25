@@ -11,11 +11,11 @@ struct User: Decodable, Equatable, Hashable {
     var avatarUrl: String
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.id)
+        hasher.combine(id)
     }
 
     static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 
     private enum CodingKeys: String, CodingKey {

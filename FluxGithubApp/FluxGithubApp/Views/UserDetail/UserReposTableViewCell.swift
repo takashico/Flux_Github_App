@@ -8,12 +8,11 @@
 import UIKit
 
 class UserReposTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var languageTextView: UIView!
-    @IBOutlet weak var languageLabel: UILabel!
-    @IBOutlet weak var starCountLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var languageTextView: UIView!
+    @IBOutlet private weak var languageLabel: UILabel!
+    @IBOutlet private weak var starCountLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
 
     func configure(repos: Repos) {
         languageTextView.isHidden = repos.language == nil

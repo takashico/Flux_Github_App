@@ -15,11 +15,11 @@ struct Repos: Decodable, Equatable, Hashable {
     var htmlUrl: String
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.id)
+        hasher.combine(id)
     }
 
     static func == (lhs: Repos, rhs: Repos) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 
     private enum CodingKeys: String, CodingKey {

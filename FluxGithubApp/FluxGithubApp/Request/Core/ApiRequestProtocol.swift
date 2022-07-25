@@ -16,6 +16,6 @@ protocol ApiRequestProtocol {
 
 extension ApiRequestProtocol {
     var requestUrl: String {
-        return "https://api.github.com/" + path
+        "https://api.github.com/" + path
     }
 }

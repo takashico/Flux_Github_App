@@ -16,12 +16,12 @@ final class UserRepositoryImpl: UserRepository {
     private let client: ApiClient
 
     init(apiClient: ApiClient) {
-        self.client = apiClient
+        client = apiClient
     }
 
     /// ユーザー一覧を取得
     func fetchList(since: Int, perPage: Int) -> Single<[User]> {
-        return client.sendRequest(request: FetchUserListRequest(
+        client.sendRequest(request: FetchUserListRequest(
             since: since,
             perPage: perPage
         ))
@@ -29,7 +29,7 @@ final class UserRepositoryImpl: UserRepository {
 
     /// ユーザー詳細情報を取得
     func fetchDetail(username: String) -> Single<UserDetail> {
-        return client.sendRequest(request: FetchUserDetailRequest(
+        client.sendRequest(request: FetchUserDetailRequest(
             username: username
         ))
     }

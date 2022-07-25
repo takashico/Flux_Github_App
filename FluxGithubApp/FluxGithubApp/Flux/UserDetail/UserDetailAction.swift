@@ -8,14 +8,14 @@
 enum UserDetailAction: Action {
     case userDetailFetched(user: UserDetail)
     case reposListFirstFetched(
-            reposList: [Repos],
-            isDataEnded: Bool
-         )
+        reposList: [Repos],
+        isDataEnded: Bool
+    )
     case reposListMoreFetched(
-            page: Int,
-            reposList: [Repos],
-            isDataEnded: Bool
-         )
+        page: Int,
+        reposList: [Repos],
+        isDataEnded: Bool
+    )
     case apiError(error: Error)
     case userDetailFetchStart
     case userDetailFetchEnd

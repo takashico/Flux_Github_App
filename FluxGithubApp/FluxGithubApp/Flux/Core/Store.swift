@@ -19,7 +19,5 @@ class Store {
         .disposed(by: disposeBag)
     }
 
-    func onAction(action: Action) {
-        return
-    }
+    func onAction(action: Action) {}
 }
