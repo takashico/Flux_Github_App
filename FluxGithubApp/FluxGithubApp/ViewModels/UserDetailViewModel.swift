@@ -44,37 +44,37 @@ final class UserDetailViewModel: UserDetailViewModelOutput {
         self.actionCreator = actionCreator
         self.store = store
 
-        self.user = store.stateObservable.map { state in
+        user = store.stateObservable.map { state in
             state.user
         }
         .share()
 
-        self.reposList = store.stateObservable.map { state in
+        reposList = store.stateObservable.map { state in
             state.reposList
         }
         .share()
 
-        self.isLoading = store.stateObservable.map { state in
+        isLoading = store.stateObservable.map { state in
             state.isLoading
         }
         .share()
 
-        self.isReposListLoading = store.stateObservable.map { state in
+        isReposListLoading = store.stateObservable.map { state in
             state.isReposListLoading
         }
         .share()
 
-        self.isReposListDataEnded = store.stateObservable.map { state in
+        isReposListDataEnded = store.stateObservable.map { state in
             state.isReposListDataEnded
         }
         .share()
 
-        self.canReposListFetchMore = store.stateObservable.map { state in
+        canReposListFetchMore = store.stateObservable.map { state in
             state.canReposListFetchMore
         }
         .share()
 
-        self.apiError = store.stateObservable.map { state in
+        apiError = store.stateObservable.map { state in
             state.apiError
         }
         .share()

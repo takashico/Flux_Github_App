@@ -9,11 +9,10 @@ import Kingfisher
 import UIKit
 
 class UserDetailTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var followerAndFollowingLabel: UILabel!
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var userNameLabel: UILabel!
+    @IBOutlet private weak var fullNameLabel: UILabel!
+    @IBOutlet private weak var followerAndFollowingLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

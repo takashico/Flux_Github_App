@@ -14,11 +14,11 @@ struct UserDetail: Decodable, Equatable, Hashable {
     var followingCount: Int
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.id)
+        hasher.combine(id)
     }
 
     static func == (lhs: UserDetail, rhs: UserDetail) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 
     private enum CodingKeys: String, CodingKey {

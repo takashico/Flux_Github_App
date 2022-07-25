@@ -10,13 +10,12 @@ import RxSwift
 import UIKit
 
 class UserDetailViewController: UIViewController {
-
     private enum SectionType: Int, CaseIterable {
         case userDetail = 0
         case reposList = 1
     }
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
 
     // usernameは必須
     var username: String!
@@ -31,6 +30,7 @@ class UserDetailViewController: UIViewController {
             tableView.reloadSections(IndexSet(integer: SectionType.userDetail.rawValue), with: .fade)
         }
     }
+
     // リポジトリリスト
     private var reposList = [Repos]() {
         didSet {
@@ -187,7 +187,7 @@ class UserDetailViewController: UIViewController {
 
 extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SectionType.allCases.count
+        SectionType.allCases.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -220,6 +220,6 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 }

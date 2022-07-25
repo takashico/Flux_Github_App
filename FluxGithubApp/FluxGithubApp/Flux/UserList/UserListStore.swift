@@ -14,7 +14,6 @@ protocol UserListStore {
 }
 
 final class UserListStoreImpl: Store, UserListStore {
-
     private let _state = BehaviorRelay<UserListState>(
         value: UserListState(
             users: [],
@@ -28,11 +27,11 @@ final class UserListStoreImpl: Store, UserListStore {
     )
 
     var state: UserListState {
-        return _state.value
+        _state.value
     }
 
     var stateObservable: Observable<UserListState> {
-        return _state.asObservable()
+        _state.asObservable()
     }
 
     override func onAction(action: Action) {
@@ -48,7 +47,7 @@ final class UserListStoreImpl: Store, UserListStore {
 extension UserListStoreImpl {
     private func onAction(action: UserListAction) {
         switch action {
-        case .firstFetched(let isDataEnded, let users):
+        case let .firstFetched(isDataEnded, users):
             _state.accept(UserListState(
                 users: users,
                 isLoading: false,
@@ -63,7 +62,7 @@ extension UserListStoreImpl {
                 apiError: nil
             ))
 
-        case .moreFetched(let isDataEnded, let users):
+        case let .moreFetched(isDataEnded, users):
             _state.accept(UserListState(
                 users: state.users + users,
                 isLoading: false,
@@ -78,7 +77,7 @@ extension UserListStoreImpl {
                 apiError: nil
             ))
 
-        case .apiError(let error):
+        case let .apiError(error):
             _state.accept(UserListState(
                 users: state.users,
                 isLoading: false,
@@ -136,6 +135,6 @@ extension UserListStoreImpl {
     }
 
     private func canFetchMore(isMoreLoading: Bool, isFirstFetched: Bool, isDataEnded: Bool) -> Bool {
-        return !isMoreLoading && !isDataEnded && isFirstFetched
+        !isMoreLoading && !isDataEnded && isFirstFetched
     }
 }

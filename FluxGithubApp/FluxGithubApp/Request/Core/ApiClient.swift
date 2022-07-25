@@ -29,11 +29,11 @@ class ApiClient {
         }
 
         var request = URLRequest(url: requestUrl)
-        request.allHTTPHeaderFields = self.header
+        request.allHTTPHeaderFields = header
 
         return URLSession.shared.rx.data(request: request)
             .map { data -> Request.Response in
-                return try JSONDecoder().decode(Request.Response.self, from: data)
+                try JSONDecoder().decode(Request.Response.self, from: data)
             }
             .asSingle()
     }

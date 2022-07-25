@@ -10,7 +10,6 @@ import RxSwift
 import UIKit
 
 class UserListViewController: UIViewController {
-
     private enum SectionType: CaseIterable {
         case userList
     }
@@ -31,6 +30,7 @@ class UserListViewController: UIViewController {
 
         return dataSource
     }()
+
     // ユーザーリスト
     private var userList = [User]() {
         didSet {
@@ -40,6 +40,7 @@ class UserListViewController: UIViewController {
             dataSource.apply(snapshot, animatingDifferences: true)
         }
     }
+
     private var canFetchMore = false
 
     override func viewDidLoad() {
@@ -58,7 +59,7 @@ class UserListViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         // indicatorViewの設定
-        indicatorView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
+        indicatorView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 40)
     }
 
     private func setUpNavigationController() {
@@ -174,6 +175,6 @@ class UserListViewController: UIViewController {
 
 extension UserListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 }

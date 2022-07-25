@@ -14,7 +14,6 @@ protocol UserDetailStore {
 }
 
 final class UserDetailStoreImpl: Store, UserDetailStore {
-
     private let _state = BehaviorRelay<UserDetailState>(
         value: UserDetailState(
             user: nil,
@@ -30,11 +29,11 @@ final class UserDetailStoreImpl: Store, UserDetailStore {
     )
 
     var state: UserDetailState {
-        return _state.value
+        _state.value
     }
 
     var stateObservable: Observable<UserDetailState> {
-        return _state.asObservable()
+        _state.asObservable()
     }
 
     override func onAction(action: Action) {
@@ -50,7 +49,7 @@ final class UserDetailStoreImpl: Store, UserDetailStore {
 extension UserDetailStoreImpl {
     private func onAction(action: UserDetailAction) {
         switch action {
-        case .userDetailFetched(let user):
+        case let .userDetailFetched(user):
             _state.accept(UserDetailState(
                 user: user,
                 reposList: state.reposList,
@@ -63,7 +62,7 @@ extension UserDetailStoreImpl {
                 apiError: nil
             ))
 
-        case .reposListFirstFetched(let reposList, let isDataEnded):
+        case let .reposListFirstFetched(reposList, isDataEnded):
             _state.accept(UserDetailState(
                 user: state.user,
                 reposList: filteredReposList(reposList: reposList),
@@ -80,7 +79,7 @@ extension UserDetailStoreImpl {
                 apiError: nil
             ))
 
-        case .reposListMoreFetched(let page, let reposList, let isDataEnded):
+        case let .reposListMoreFetched(page, reposList, isDataEnded):
             _state.accept(UserDetailState(
                 user: state.user,
                 reposList: state.reposList + filteredReposList(reposList: reposList),
@@ -97,7 +96,7 @@ extension UserDetailStoreImpl {
                 apiError: nil
             ))
 
-        case .apiError(let error):
+        case let .apiError(error):
             _state.accept(UserDetailState(
                 user: state.user,
                 reposList: state.reposList,
@@ -189,12 +188,13 @@ extension UserDetailStoreImpl {
             ))
         }
     }
+
     /// 表示用のReposListを生成（Forkリポジトリを除く処理）
     private func filteredReposList(reposList: [Repos]) -> [Repos] {
-        return reposList.filter { !$0.isFork }
+        reposList.filter { !$0.isFork }
     }
 
     private func canReposListFetchMore(isLoading: Bool, isDataEnded: Bool, isFirstFetched: Bool) -> Bool {
-        return !isLoading && !isDataEnded && isFirstFetched
+        !isLoading && !isDataEnded && isFirstFetched
     }
 }
