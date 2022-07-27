@@ -11,6 +11,10 @@
 		086D67642889930B003C0F4E /* UserListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D67632889930B003C0F4E /* UserListRouter.swift */; };
 		086D6766288BF41D003C0F4E /* UserDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D6765288BF41D003C0F4E /* UserDetailRouter.swift */; };
 		086D676A288BF587003C0F4E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D6769288BF587003C0F4E /* Router.swift */; };
+		086D676F289038DF003C0F4E /* MockUserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D676E289038DF003C0F4E /* MockUserRepositoryImpl.swift */; };
+		086D677228903ABC003C0F4E /* User.mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D677128903ABC003C0F4E /* User.mock.swift */; };
+		086D67742890D4FF003C0F4E /* UserDetail.mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D67732890D4FF003C0F4E /* UserDetail.mock.swift */; };
+		086D67762890D691003C0F4E /* UserListActionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D67752890D691003C0F4E /* UserListActionCreatorTests.swift */; };
 		192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192373C828117373004BF245 /* UserListTableViewCell.swift */; };
 		192373CB28117373004BF245 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 192373C928117373004BF245 /* UserListTableViewCell.xib */; };
 		192373CE28117855004BF245 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 192373CD28117855004BF245 /* Kingfisher */; };
@@ -89,6 +93,10 @@
 		086D67632889930B003C0F4E /* UserListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRouter.swift; sourceTree = "<group>"; };
 		086D6765288BF41D003C0F4E /* UserDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailRouter.swift; sourceTree = "<group>"; };
 		086D6769288BF587003C0F4E /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		086D676E289038DF003C0F4E /* MockUserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRepositoryImpl.swift; sourceTree = "<group>"; };
+		086D677128903ABC003C0F4E /* User.mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.mock.swift; sourceTree = "<group>"; };
+		086D67732890D4FF003C0F4E /* UserDetail.mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.mock.swift; sourceTree = "<group>"; };
+		086D67752890D691003C0F4E /* UserListActionCreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListActionCreatorTests.swift; sourceTree = "<group>"; };
 		192373C828117373004BF245 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		192373C928117373004BF245 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		192635D32814646300129705 /* UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.swift; sourceTree = "<group>"; };
@@ -200,6 +208,32 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		086D676C2890387E003C0F4E /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				086D677028903A93003C0F4E /* Data */,
+				086D676D289038B2003C0F4E /* Repositories */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		086D676D289038B2003C0F4E /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				086D676E289038DF003C0F4E /* MockUserRepositoryImpl.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		086D677028903A93003C0F4E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				086D677128903ABC003C0F4E /* User.mock.swift */,
+				086D67732890D4FF003C0F4E /* UserDetail.mock.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		194A5617280DBA2D003E8EBB = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +279,9 @@
 		194A5639280DBA2F003E8EBB /* FluxGithubAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				086D676C2890387E003C0F4E /* Mock */,
 				194A563A280DBA2F003E8EBB /* FluxGithubAppTests.swift */,
+				086D67752890D691003C0F4E /* UserListActionCreatorTests.swift */,
 			);
 			path = FluxGithubAppTests;
 			sourceTree = "<group>";
@@ -640,7 +676,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				086D67762890D691003C0F4E /* UserListActionCreatorTests.swift in Sources */,
+				086D676F289038DF003C0F4E /* MockUserRepositoryImpl.swift in Sources */,
 				194A563B280DBA2F003E8EBB /* FluxGithubAppTests.swift in Sources */,
+				086D67742890D4FF003C0F4E /* UserDetail.mock.swift in Sources */,
+				086D677228903ABC003C0F4E /* User.mock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
