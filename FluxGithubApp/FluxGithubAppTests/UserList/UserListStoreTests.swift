@@ -14,7 +14,7 @@ import XCTest
 // 2. Flux.Coreのテスト（それぞれ機能するかを確かめるテスト・本来なら実装時にやるべきこと）
 // 3. UserDetailの各種モジュールテスト
 
-class UserListStoreTests: XCTestCase {
+final class UserListStoreTests: XCTestCase {
     private struct Dependency {
         let store: UserListStore
         let dispatcher: Dispatcher

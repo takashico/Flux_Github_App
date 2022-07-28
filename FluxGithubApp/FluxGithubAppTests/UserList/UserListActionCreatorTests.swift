@@ -9,7 +9,7 @@
 import RxSwift
 import XCTest
 
-class UserListActionCreatorTests: XCTestCase {
+final class UserListActionCreatorTests: XCTestCase {
     private struct Dependency {
         let actionCreator: UserListActionCreator
         let errorActionCreator: UserListActionCreator

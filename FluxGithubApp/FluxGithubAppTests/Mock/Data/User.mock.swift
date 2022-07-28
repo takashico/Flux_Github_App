@@ -10,7 +10,7 @@
 extension User {
     static func mock1() -> User {
         User(
-            id: 0,
+            id: 1,
             name: "test1",
             avatarUrl: ""
         )
@@ -18,7 +18,7 @@ extension User {
     
     static func mock2() -> User {
         User(
-            id: 1,
+            id: 2,
             name: "test2",
             avatarUrl: ""
         )
