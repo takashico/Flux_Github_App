@@ -44,7 +44,8 @@ class UserListActionCreatorTests: XCTestCase {
             switch action as? UserListAction {
             case let .firstFetched(_, users):
                 let resultUsers: [User] = [User.mock1()]
-                XCTAssertEqual(users, resultUsers)
+                XCTAssertEqual(users.count, resultUsers.count)
+                XCTAssertEqual(users.first?.id, resultUsers.first?.id)
                 fetchedExpect.fulfill()
             case .firstFetchStart:
                 fetchStartExpect.fulfill()
@@ -101,7 +102,8 @@ class UserListActionCreatorTests: XCTestCase {
             switch action as? UserListAction {
             case let .moreFetched(_, users):
                 let resultUsers: [User] = [User.mock2()]
-                XCTAssertEqual(users, resultUsers)
+                XCTAssertEqual(users.count, resultUsers.count)
+                XCTAssertEqual(users.first?.id, resultUsers.first?.id)
                 fetchedExpect.fulfill()
             case .moreFetchStart:
                 fetchStartExpect.fulfill()

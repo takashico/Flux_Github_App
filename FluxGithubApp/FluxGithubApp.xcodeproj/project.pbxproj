@@ -15,6 +15,7 @@
 		086D677228903ABC003C0F4E /* User.mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D677128903ABC003C0F4E /* User.mock.swift */; };
 		086D67742890D4FF003C0F4E /* UserDetail.mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D67732890D4FF003C0F4E /* UserDetail.mock.swift */; };
 		086D67762890D691003C0F4E /* UserListActionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D67752890D691003C0F4E /* UserListActionCreatorTests.swift */; };
+		086D677828918FC5003C0F4E /* UserListStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D677728918FC5003C0F4E /* UserListStoreTests.swift */; };
 		192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192373C828117373004BF245 /* UserListTableViewCell.swift */; };
 		192373CB28117373004BF245 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 192373C928117373004BF245 /* UserListTableViewCell.xib */; };
 		192373CE28117855004BF245 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 192373CD28117855004BF245 /* Kingfisher */; };
@@ -97,6 +98,7 @@
 		086D677128903ABC003C0F4E /* User.mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.mock.swift; sourceTree = "<group>"; };
 		086D67732890D4FF003C0F4E /* UserDetail.mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.mock.swift; sourceTree = "<group>"; };
 		086D67752890D691003C0F4E /* UserListActionCreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListActionCreatorTests.swift; sourceTree = "<group>"; };
+		086D677728918FC5003C0F4E /* UserListStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListStoreTests.swift; sourceTree = "<group>"; };
 		192373C828117373004BF245 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		192373C928117373004BF245 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		192635D32814646300129705 /* UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				086D676C2890387E003C0F4E /* Mock */,
 				194A563A280DBA2F003E8EBB /* FluxGithubAppTests.swift */,
 				086D67752890D691003C0F4E /* UserListActionCreatorTests.swift */,
+				086D677728918FC5003C0F4E /* UserListStoreTests.swift */,
 			);
 			path = FluxGithubAppTests;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 			files = (
 				086D67762890D691003C0F4E /* UserListActionCreatorTests.swift in Sources */,
 				086D676F289038DF003C0F4E /* MockUserRepositoryImpl.swift in Sources */,
+				086D677828918FC5003C0F4E /* UserListStoreTests.swift in Sources */,
 				194A563B280DBA2F003E8EBB /* FluxGithubAppTests.swift in Sources */,
 				086D67742890D4FF003C0F4E /* UserDetail.mock.swift in Sources */,
 				086D677228903ABC003C0F4E /* User.mock.swift in Sources */,
