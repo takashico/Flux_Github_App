@@ -10,7 +10,7 @@ import RxSwift
 import XCTest
 
 // TODO: やること
-// 1. UserListの各種モジュールテスト（Store, ViewModel）
+// 1. UserListの各種モジュールテスト（Store, ViewModel, Router）
 // 2. Flux.Coreのテスト（それぞれ機能するかを確かめるテスト・本来なら実装時にやるべきこと）
 // 3. UserDetailの各種モジュールテスト
 
