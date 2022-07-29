@@ -6,7 +6,6 @@
 //
 
 @testable import FluxGithubApp
-import Foundation
 import RxSwift
 
 final class MockUserRepositoryImpl: UserRepository {
@@ -26,24 +25,6 @@ final class MockUserRepositoryImpl: UserRepository {
     func fetchDetail(username: String) -> Single<UserDetail> {
         Single.create { event in
             event(.success(UserDetail.mock()))
-            return Disposables.create()
-        }
-    }
-}
-
-final class MockErrorUserRepositoryImpl: UserRepository {
-    /// ユーザー一覧を取得
-    func fetchList(since: Int, perPage: Int) -> Single<[User]> {
-        Single.create { event in
-            event(.failure(URLError(.badURL)))
-            return Disposables.create()
-        }
-    }
-    
-    /// ユーザー詳細情報を取得
-    func fetchDetail(username: String) -> Single<UserDetail> {
-        Single.create { event in
-            event(.failure(URLError(.badURL)))
             return Disposables.create()
         }
     }
