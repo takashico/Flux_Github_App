@@ -13,21 +13,27 @@ final class UserListViewModelTests: XCTestCase {
     private struct Dependency {
         let viewModelInput: UserListViewModelInput
         let viewModelOutput: UserListViewModelOutput
-        let actionCreator: UserListActionCreator
-        let store: UserListStore
+        let navigationController: MockNavigationController
         
         init() {
-            actionCreator = UserListActionCreatorImpl(
+            let actionCreator = UserListActionCreatorImpl(
                 .shared,
                 userRepository: MockUserRepositoryImpl()
             )
-            
-            store = UserListStoreImpl(.shared)
+            let store = UserListStoreImpl(.shared)
             
             let viewModel = UserListViewModel(
                 actionCreator: actionCreator,
                 store: store
             )
+            
+            navigationController = MockNavigationController()
+            let viewController = UIViewController()
+            navigationController.viewControllers = [viewController]
+            viewModel.injectRouter(
+                UserListRouterImpl(view: viewController)
+            )
+            
             viewModelInput = viewModel
             viewModelOutput = viewModel
         }
@@ -80,5 +86,20 @@ final class UserListViewModelTests: XCTestCase {
         
         wait(for: [expect], timeout: 1.0)
         disposable.dispose()
+    }
+    
+    /// ユーザーCellのタップアクション
+    func testDidSelectRow() {
+        // データを取得済みにする
+        dependency.viewModelInput.fetchUserList()
+        
+        // 遷移前であることを確認
+        XCTAssertNil(dependency.navigationController.currentVC)
+        
+        dependency.viewModelInput
+            .didSelectRow(at: IndexPath(row: 0, section: 0))
+        
+        // 詳細画面に遷移できていることを確認
+        XCTAssertTrue(dependency.navigationController.currentVC is UserDetailViewController)
     }
 }

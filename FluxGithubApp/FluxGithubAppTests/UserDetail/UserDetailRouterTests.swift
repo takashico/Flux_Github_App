@@ -34,7 +34,7 @@ final class UserDetailRouterTests: XCTestCase {
         XCTAssertNil(dependency.navigationController.currentVC)
         
         dependency.router.transitionToRepositoryDetail(
-            url: URL(string: "https://github.com")!
+            url: URL(string: Repos.mock1().htmlUrl)!
         )
         
         // 詳細画面に遷移していることを確認

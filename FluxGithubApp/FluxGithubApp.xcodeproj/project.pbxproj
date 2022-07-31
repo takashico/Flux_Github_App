@@ -26,6 +26,7 @@
 		086D679528953B4F003C0F4E /* UserDetailStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D679428953B4F003C0F4E /* UserDetailStoreTests.swift */; };
 		086D679728964317003C0F4E /* UserDetailRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D679628964317003C0F4E /* UserDetailRouterTests.swift */; };
 		086D679A28965677003C0F4E /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D679928965677003C0F4E /* MockNavigationController.swift */; };
+		086D679C28965F42003C0F4E /* UserDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D679B28965F42003C0F4E /* UserDetailViewModelTests.swift */; };
 		192373CA28117373004BF245 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192373C828117373004BF245 /* UserListTableViewCell.swift */; };
 		192373CB28117373004BF245 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 192373C928117373004BF245 /* UserListTableViewCell.xib */; };
 		192373CE28117855004BF245 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 192373CD28117855004BF245 /* Kingfisher */; };
@@ -119,6 +120,7 @@
 		086D679428953B4F003C0F4E /* UserDetailStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailStoreTests.swift; sourceTree = "<group>"; };
 		086D679628964317003C0F4E /* UserDetailRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailRouterTests.swift; sourceTree = "<group>"; };
 		086D679928965677003C0F4E /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
+		086D679B28965F42003C0F4E /* UserDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewModelTests.swift; sourceTree = "<group>"; };
 		192373C828117373004BF245 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		192373C928117373004BF245 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		192635D32814646300129705 /* UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				086D678828941E0A003C0F4E /* UserDetailActionCreatorTests.swift */,
 				086D679428953B4F003C0F4E /* UserDetailStoreTests.swift */,
 				086D679628964317003C0F4E /* UserDetailRouterTests.swift */,
+				086D679B28965F42003C0F4E /* UserDetailViewModelTests.swift */,
 			);
 			path = UserDetail;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				086D679528953B4F003C0F4E /* UserDetailStoreTests.swift in Sources */,
 				086D679A28965677003C0F4E /* MockNavigationController.swift in Sources */,
 				086D6791289420DB003C0F4E /* Repos.mock.swift in Sources */,
+				086D679C28965F42003C0F4E /* UserDetailViewModelTests.swift in Sources */,
 				086D677B2892C97F003C0F4E /* UserListViewModelTests.swift in Sources */,
 				086D678C28941FE8003C0F4E /* MockErrorUserRepositoryImpl.swift in Sources */,
 				194A563B280DBA2F003E8EBB /* FluxGithubAppTests.swift in Sources */,

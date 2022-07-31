@@ -12,11 +12,14 @@ final class MockUserRepositoryImpl: UserRepository {
     /// ユーザー一覧を取得
     func fetchList(since: Int, perPage: Int) -> Single<[User]> {
         Single.create { event in
-            if since == 0 {
-                event(.success([User.mock1()]))
-            } else {
-                event(.success([User.mock2()]))
-            }
+            let user: User = {
+                if since == 0 {
+                    return User.mock1()
+                } else {
+                    return User.mock2()
+                }
+            }()
+            event(.success([user]))
             return Disposables.create()
         }
     }

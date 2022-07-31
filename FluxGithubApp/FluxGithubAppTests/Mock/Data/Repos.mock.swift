@@ -14,7 +14,7 @@ extension Repos {
             name: "test1",
             stargazersCount: 0,
             isFork: false,
-            htmlUrl: ""
+            htmlUrl: "https://github.com"
         )
     }
     
@@ -24,7 +24,7 @@ extension Repos {
             name: "test2",
             stargazersCount: 0,
             isFork: false,
-            htmlUrl: ""
+            htmlUrl: "https://github.com"
         )
     }
     
@@ -35,7 +35,7 @@ extension Repos {
             name: "test1",
             stargazersCount: 0,
             isFork: true,
-            htmlUrl: ""
+            htmlUrl: "https://github.com"
         )
     }
 }

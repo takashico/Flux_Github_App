@@ -117,22 +117,19 @@ final class UserDetailActionCreatorTests: XCTestCase {
     }
     
     func testMoreFetchUserRepositories() {
-        // 期待する結果
-        let pageResult = MORE_PAGE
-        
         let fetchedExpect = expectation(description: "waiting UserDetailAction.reposListMoreFetched")
         let fetchStartExpect = expectation(description: "waiting UserDetailAction.reposListMoreFetchStart")
         let fetchEndExpect = expectation(description: "waiting UserDetailAction.reposListMoreFetchEnd")
         
-        let disposable = dependency.dispatcher.register { action in
+        let disposable = dependency.dispatcher.register { [weak self] action in
             switch action as? UserDetailAction {
             case let .reposListMoreFetched(page, reposList, _):
                 // 期待する結果
-                let results: [Repos] = [Repos.mock1()]
+                let results: [Repos] = [Repos.mock2()]
                 XCTAssertEqual(reposList.count, results.count)
                 XCTAssertEqual(reposList.first?.id, results.first?.id)
                 
-                XCTAssertEqual(page, pageResult)
+                XCTAssertEqual(page, self?.MORE_PAGE)
                 fetchedExpect.fulfill()
             case .reposListMoreFetchStart:
                 fetchStartExpect.fulfill()
@@ -144,7 +141,11 @@ final class UserDetailActionCreatorTests: XCTestCase {
         }
         
         dependency.actionCreator
-            .moreFetchUserRepositories(username: USER_NAME, page: pageResult, perPage: PER_PAGE)
+            .moreFetchUserRepositories(
+                username: USER_NAME,
+                page: MORE_PAGE,
+                perPage: PER_PAGE
+            )
         
         wait(
             for: [
