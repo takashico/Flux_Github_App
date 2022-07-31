@@ -11,9 +11,9 @@ import XCTest
 
 final class UserDetailActionCreatorTests: XCTestCase {
     private struct Dependency {
-        var actionCreator: UserDetailActionCreator
-        var errorActionCreator: UserDetailActionCreator
-        var dispatcher: Dispatcher
+        let actionCreator: UserDetailActionCreator
+        let errorActionCreator: UserDetailActionCreator
+        let dispatcher: Dispatcher
         
         init() {
             dispatcher = .shared
