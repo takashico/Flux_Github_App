@@ -87,7 +87,7 @@ final class UserDetailActionCreatorTests: XCTestCase {
             switch action as? UserDetailAction {
             case let .reposListFirstFetched(reposList, _):
                 // 期待する結果
-                let results: [Repos] = [Repos.mock()]
+                let results: [Repos] = [Repos.mock1()]
                 XCTAssertEqual(reposList.count, results.count)
                 XCTAssertEqual(reposList.first?.id, results.first?.id)
                 fetchedExpect.fulfill()
@@ -128,7 +128,7 @@ final class UserDetailActionCreatorTests: XCTestCase {
             switch action as? UserDetailAction {
             case let .reposListMoreFetched(page, reposList, _):
                 // 期待する結果
-                let results: [Repos] = [Repos.mock()]
+                let results: [Repos] = [Repos.mock1()]
                 XCTAssertEqual(reposList.count, results.count)
                 XCTAssertEqual(reposList.first?.id, results.first?.id)
                 

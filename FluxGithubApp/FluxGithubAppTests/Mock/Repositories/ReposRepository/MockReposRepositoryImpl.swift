@@ -12,7 +12,7 @@ final class MockReposRepositoryImpl: ReposRepository {
     /// ユーザーに紐づくリポジトリ一覧を取得
     func fetchList(username: String, page: Int, perPage: Int) -> Single<[Repos]> {
         Single.create { event in
-            event(.success([Repos.mock()]))
+            event(.success([Repos.mock1()]))
             return Disposables.create()
         }
     }
