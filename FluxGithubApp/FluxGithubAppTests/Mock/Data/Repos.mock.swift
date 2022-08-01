@@ -17,7 +17,7 @@ extension Repos {
             htmlUrl: "https://github.com"
         )
     }
-    
+
     static func mock2() -> Repos {
         Repos(
             id: 2,
@@ -27,7 +27,7 @@ extension Repos {
             htmlUrl: "https://github.com"
         )
     }
-    
+
     // isFork = trueであるモック
     static func forkMock() -> Repos {
         Repos(

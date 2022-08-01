@@ -14,7 +14,7 @@ final class UserListActionCreatorTests: XCTestCase {
         let actionCreator: UserListActionCreator
         let errorActionCreator: UserListActionCreator
         let dispatcher: Dispatcher
-        
+
         init() {
             dispatcher = .shared
             actionCreator = UserListActionCreatorImpl(
@@ -27,19 +27,19 @@ final class UserListActionCreatorTests: XCTestCase {
             )
         }
     }
-    
+
     private var dependency: Dependency!
-    
+
     override func setUp() {
         super.setUp()
         dependency = Dependency()
     }
-    
+
     func testFirstFetchUserList() {
         let fetchedExpect = expectation(description: "waiting UserListAction.firstFetched")
         let fetchStartExpect = expectation(description: "waiting UserListAction.firstFetchStart")
         let fetchEndExpect = expectation(description: "waiting UserListAction.firstFetchEnd")
-        
+
         let disposable = dependency.dispatcher.register { action in
             switch action as? UserListAction {
             case let .firstFetched(_, users):
@@ -55,9 +55,9 @@ final class UserListActionCreatorTests: XCTestCase {
                 break
             }
         }
-        
+
         dependency.actionCreator.firstFetchUserList(perPage: 2)
-        
+
         wait(
             for: [
                 fetchStartExpect,
@@ -67,14 +67,14 @@ final class UserListActionCreatorTests: XCTestCase {
             timeout: 1.0,
             enforceOrder: true
         )
-        
+
         disposable.dispose()
     }
-    
+
     func testErrorFirstFetchUserList() {
         var fetchedError: Error?
         let expect = expectation(description: "waiting UserListAction.apiError")
-        
+
         let disposable = dependency.dispatcher.register { action in
             switch action as? UserListAction {
             case let .apiError(error):
@@ -84,20 +84,20 @@ final class UserListActionCreatorTests: XCTestCase {
                 break
             }
         }
-        
+
         dependency.errorActionCreator.firstFetchUserList(perPage: 2)
-        
+
         wait(for: [expect], timeout: 1.0)
         XCTAssertNotNil(fetchedError)
-        
+
         disposable.dispose()
     }
-    
+
     func testMoreFetchUserList() {
         let fetchedExpect = expectation(description: "waiting UserListAction.moreFetched")
         let fetchStartExpect = expectation(description: "waiting UserListAction.moreFetchStart")
         let fetchEndExpect = expectation(description: "waiting UserListAction.moreFetchEnd")
-        
+
         let disposable = dependency.dispatcher.register { action in
             switch action as? UserListAction {
             case let .moreFetched(_, users):
@@ -113,9 +113,9 @@ final class UserListActionCreatorTests: XCTestCase {
                 break
             }
         }
-        
+
         dependency.actionCreator.moreFetchUserList(since: 1, perPage: 2)
-        
+
         wait(
             for: [
                 fetchStartExpect,
@@ -125,14 +125,14 @@ final class UserListActionCreatorTests: XCTestCase {
             timeout: 1.0,
             enforceOrder: true
         )
-        
+
         disposable.dispose()
     }
-    
+
     func testErrorMoreFetchUserList() {
         var fetchedError: Error?
         let expect = expectation(description: "waiting UserListAction.apiError")
-        
+
         let disposable = dependency.dispatcher.register { action in
             switch action as? UserListAction {
             case let .apiError(error):
@@ -142,12 +142,12 @@ final class UserListActionCreatorTests: XCTestCase {
                 break
             }
         }
-        
+
         dependency.errorActionCreator.moreFetchUserList(since: 1, perPage: 2)
-        
+
         wait(for: [expect], timeout: 1.0)
         XCTAssertNotNil(fetchedError)
-        
+
         disposable.dispose()
     }
 }

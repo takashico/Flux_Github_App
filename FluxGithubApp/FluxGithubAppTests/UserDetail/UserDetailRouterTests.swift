@@ -13,7 +13,7 @@ final class UserDetailRouterTests: XCTestCase {
     private struct Dependency {
         let router: UserDetailRouter
         let navigationController: MockNavigationController
-        
+
         init() {
             navigationController = MockNavigationController()
             let viewController = UIViewController()
@@ -21,22 +21,22 @@ final class UserDetailRouterTests: XCTestCase {
             router = UserDetailRouterImpl(view: viewController)
         }
     }
-    
+
     private var dependency: Dependency!
-    
+
     override func setUp() {
         super.setUp()
         dependency = Dependency()
     }
-    
+
     func testTransitionToRepositoryDetail() {
         // 遷移前であることを確認
         XCTAssertNil(dependency.navigationController.currentVC)
-        
+
         dependency.router.transitionToRepositoryDetail(
             url: URL(string: Repos.mock1().htmlUrl)!
         )
-        
+
         // 詳細画面に遷移していることを確認
         XCTAssertTrue(dependency.navigationController.currentVC is RepositoryDetailViewController)
     }

@@ -15,7 +15,7 @@ extension User {
             avatarUrl: ""
         )
     }
-    
+
     static func mock2() -> User {
         User(
             id: 2,

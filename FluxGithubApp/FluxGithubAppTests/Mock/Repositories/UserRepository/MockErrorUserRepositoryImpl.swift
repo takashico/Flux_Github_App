@@ -17,7 +17,7 @@ final class MockErrorUserRepositoryImpl: UserRepository {
             return Disposables.create()
         }
     }
-    
+
     /// ユーザー詳細情報を取得
     func fetchDetail(username: String) -> Single<UserDetail> {
         Single.create { event in
