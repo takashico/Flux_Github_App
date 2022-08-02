@@ -4,8 +4,6 @@
 
 ## Xcodegenを使用するため除外
 *.xcodeproj/*
-*.xcodeproj/project.pbxproj
-*.xcodeproj/xcshareddata/
 
 ## APIキーを含むファイルのため除外
 Environments.swift
