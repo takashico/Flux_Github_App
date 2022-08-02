@@ -3,7 +3,7 @@ name: FluxGithubApp
 options:
   deploymentTarget:
     iOS: 13.0
-  bundleIdPrefix: takashico.FluxGithubApp
+  bundleIdPrefix: takashico
 
 settings:
   base:
@@ -38,7 +38,12 @@ targets:
   FluxGithubApp:
     type: application
     platform: iOS
-    sources: FluxGithubApp
+    sources: 
+      - FluxGithubApp
+    settings:
+      configs:
+        debug:
+          DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
     configFiles:
       Debug: configs/FluxGithubApp-Debug.xcconfig
       Release: configs/FluxGithubApp-Release.xcconfig
@@ -59,7 +64,10 @@ targets:
   FluxGithubAppTests:
     type: bundle.unit-test
     platform: iOS
-    sources: FluxGithubAppTests
+    sources: 
+      - FluxGithubAppTests
+    dependencies:
+      - target: FluxGithubApp
     configFiles:
       Debug: configs/FluxGithubAppTests-Debug.xcconfig
       Release: configs/FluxGithubAppTests-Release.xcconfig
@@ -67,7 +75,36 @@ targets:
   FluxGithubAppUITests:
     type: bundle.ui-testing
     platform: iOS
-    sources: FluxGithubAppUITests
+    sources: 
+      - FluxGithubAppUITests
+    dependencies:
+      - target: FluxGithubApp
     configFiles:
       Debug: configs/FluxGithubAppUITests-Debug.xcconfig
       Release: configs/FluxGithubAppUITests-Release.xcconfig
+
+schemes:
+  FluxGithubApp:
+    build:
+      targets:
+        FluxGithubApp: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - FluxGithubApp
+      targets:
+        - name: FluxGithubAppTests
+          parallelizable: true
+          randomExecutionOrder: true
+        - name: FluxGithubAppUITests
+          parallelizable: true
+          randomExecutionOrder: true
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
