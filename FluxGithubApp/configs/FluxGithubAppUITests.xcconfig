@@ -1,0 +1,6 @@
+// Generated using xcconfig-extractor 0.6.1 by Toshihiro Suzuki - https://github.com/toshi0383/xcconfig-extractor
+PRODUCT_BUNDLE_IDENTIFIER = takashico.FluxGithubAppUITests
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+SWIFT_EMIT_LOC_STRINGS = NO
+TEST_TARGET_NAME = FluxGithubApp
+

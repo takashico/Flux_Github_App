@@ -1,0 +1,116 @@
+name: FluxGithubApp
+
+options:
+  deploymentTarget:
+    iOS: 13.0
+  bundleIdPrefix: takashico
+
+settings:
+  base:
+    MARKETING_VERSION: 1.0
+    CURRENT_PROJECT_VERSION: 1
+    DEVELOPMENT_TEAM: G4J97F9LZ2
+
+fileGroups:
+  - configs
+configFiles:
+  Debug: configs/Debug.xcconfig
+  Release: configs/Release.xcconfig
+
+packages:
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher
+    version: 7.3.0
+  RxSwift:
+    url: https://github.com/ReactiveX/RxSwift
+    version: 6.5.0
+  PKHUD:
+    url: https://github.com/pkluz/PKHUD
+    version: 5.4.0
+  Swinject:
+    url: https://github.com/Swinject/Swinject
+    version: 2.8.1
+  SwinjectStoryboard:
+    url: https://github.com/Swinject/SwinjectStoryboard
+    version: 2.2.2
+
+targets:
+  FluxGithubApp:
+    type: application
+    platform: iOS
+    sources: 
+      - FluxGithubApp
+    configFiles:
+      Debug: configs/FluxGithubApp-Debug.xcconfig
+      Release: configs/FluxGithubApp-Release.xcconfig
+    dependencies:
+      - package: RxSwift
+        product: RxCocoa
+      - package: RxSwift
+        product: RxRelay
+      - package: RxSwift
+      - package: Swinject
+      - package: SwinjectStoryboard
+      - package: Kingfisher
+      - package: PKHUD
+    postBuildScripts:
+      - name: Run SwiftLint
+        script: | 
+                if [ $(uname -m) = "arm64" ]; then
+                  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH+:$PATH}";
+                fi
+
+                if which mint >/dev/null; then
+                  xcrun --sdk macosx mint run SwiftLint swiftlint --fix
+                  xcrun --sdk macosx mint run SwiftLint swiftlint
+                else
+                  echo "warning: Mint not installed"
+                fi
+
+  FluxGithubAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: 
+      - FluxGithubAppTests
+    dependencies:
+      - target: FluxGithubApp
+    configFiles:
+      Debug: configs/FluxGithubAppTests-Debug.xcconfig
+      Release: configs/FluxGithubAppTests-Release.xcconfig
+
+  FluxGithubAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: 
+      - FluxGithubAppUITests
+    dependencies:
+      - target: FluxGithubApp
+    configFiles:
+      Debug: configs/FluxGithubAppUITests-Debug.xcconfig
+      Release: configs/FluxGithubAppUITests-Release.xcconfig
+
+schemes:
+  FluxGithubApp:
+    build:
+      targets:
+        FluxGithubApp: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - FluxGithubApp
+      targets:
+        - name: FluxGithubAppTests
+          parallelizable: true
+          randomExecutionOrder: true
+        - name: FluxGithubAppUITests
+          parallelizable: true
+          randomExecutionOrder: true
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

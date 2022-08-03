@@ -2,6 +2,11 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+## Xcodegenを使用するため除外
+*.xcodeproj
+*.xcodeproj/*
+
+## APIキーを含むファイルのため除外
 Environments.swift
 
 ## User settings

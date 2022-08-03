@@ -1,0 +1,8 @@
+// Generated using xcconfig-extractor 0.6.1 by Toshihiro Suzuki - https://github.com/toshi0383/xcconfig-extractor
+TEST_HOST = $(BUILT_PRODUCTS_DIR)/FluxGithubApp.app/FluxGithubApp
+BUNDLE_LOADER = $(TEST_HOST)
+IPHONEOS_DEPLOYMENT_TARGET = 15.4
+SWIFT_EMIT_LOC_STRINGS = NO
+PRODUCT_BUNDLE_IDENTIFIER = takashico.FluxGithubAppTests
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+
