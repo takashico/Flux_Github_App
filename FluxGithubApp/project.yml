@@ -59,9 +59,19 @@ targets:
       - package: SwinjectStoryboard
       - package: Kingfisher
       - package: PKHUD
-    # prebuildScripts:
-    #   - name: Run SwiftLint
-    #     script: mint run swiftlint  
+    postBuildScripts:
+      - name: Run SwiftLint
+        script: | 
+                if [ $(uname -m) = "arm64" ]; then
+                  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH+:$PATH}";
+                fi
+
+                if which mint >/dev/null; then
+                  xcrun --sdk macosx mint run SwiftLint swiftlint --fix
+                  xcrun --sdk macosx mint run SwiftLint swiftlint
+                else
+                  echo "warning: Mint not installed"
+                fi
 
   FluxGithubAppTests:
     type: bundle.unit-test
