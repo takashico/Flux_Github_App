@@ -17,6 +17,23 @@ https://user-images.githubusercontent.com/5306074/165024595-ba4cb002-7f7e-481e-b
 - Swinject
 - SwinjectStoryboard
 
+## 使用ツール
+- Mint（パッケージ管理）
+- XcodeGen
+- xcconfig-extractor
+- SwiftLint
+- SwiftFormat
+
+## セットアップ
+
+    ```shell
+    $ make setup
+    ```
+    
+`make setUp`の実行により以下の内容を実行する
+1. 各種ツールのインストール
+2. XcodeGenによるプロジェクトファイルの生成
+
 ## 各フォルダの説明
 
 ### Common
