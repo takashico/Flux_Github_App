@@ -40,12 +40,6 @@ targets:
     platform: iOS
     sources: 
       - FluxGithubApp
-    settings:
-      base:
-        INFOPLIST_FILE: FluxGithubApp/Info.plist
-      configs:
-        debug:
-          DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
     configFiles:
       Debug: configs/FluxGithubApp-Debug.xcconfig
       Release: configs/FluxGithubApp-Release.xcconfig
@@ -78,9 +72,6 @@ targets:
     platform: iOS
     sources: 
       - FluxGithubAppTests
-    settings:
-      base:
-        INFOPLIST_FILE: FluxGithubAppTests/Info.plist
     dependencies:
       - target: FluxGithubApp
     configFiles:
@@ -92,9 +83,6 @@ targets:
     platform: iOS
     sources: 
       - FluxGithubAppUITests
-    settings:
-      base:
-        INFOPLIST_FILE: FluxGithubAppUITests/Info.plist
     dependencies:
       - target: FluxGithubApp
     configFiles:
